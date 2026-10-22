@@ -1,0 +1,6 @@
+{
+  "name": "LYS Salon & Spa | Lower Parel, Mumbai",
+  "description": "An elite urban sanctuary in Lower Parel, Mumbai. Thoughtful beauty rituals, architectural stillness, and bespoke botanical care for hair and skin.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
