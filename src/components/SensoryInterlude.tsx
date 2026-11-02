@@ -1,30 +1,50 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
 import { Waves, Sparkles, Wind } from 'lucide-react';
 
 export const SensoryInterlude: React.FC = () => {
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const overlayPromptRef = useRef<HTMLDivElement | null>(null);
   const [activeMode, setActiveMode] = useState<'flow' | 'ripples' | 'mist'>('flow');
-  const [isInteracting, setIsInteracting] = useState(false);
+
+  // Stable mode change handler
+  const handleModeChange = useCallback((mode: 'flow' | 'ripples' | 'mist') => {
+    setActiveMode(mode);
+  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
+    const container = containerRef.current;
+    if (!canvas || !container) return;
+
+    const ctx = canvas.getContext('2d', { alpha: false });
     if (!ctx) return;
 
-    let animationFrameId: number;
-    let width = (canvas.width = canvas.offsetWidth * window.devicePixelRatio);
-    let height = (canvas.height = canvas.offsetHeight * window.devicePixelRatio);
-    ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+    let animationFrameId: number = 0;
+    let isVisible = false;
+    let isTabActive = !document.hidden;
 
-    const handleResize = () => {
+    // Check prefers-reduced-motion
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Cap DPR to 2 to prevent excessive memory/CPU strain on high-DPI mobile screens
+    const getDpr = () => Math.min(window.devicePixelRatio || 1, 2);
+
+    const resizeCanvas = () => {
       if (!canvas) return;
-      width = canvas.width = canvas.offsetWidth * window.devicePixelRatio;
-      height = canvas.height = canvas.offsetHeight * window.devicePixelRatio;
-      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+      const dpr = getDpr();
+      const rect = canvas.getBoundingClientRect();
+      const w = Math.round(rect.width * dpr);
+      const h = Math.round(rect.height * dpr);
+
+      if (canvas.width !== w || canvas.height !== h) {
+        canvas.width = w;
+        canvas.height = h;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
     };
 
-    window.addEventListener('resize', handleResize);
+    resizeCanvas();
 
     // Particle / wave simulation state
     const particles: Array<{
@@ -33,16 +53,20 @@ export const SensoryInterlude: React.FC = () => {
       vx: number;
       vy: number;
       radius: number;
-      hue: number;
       alpha: number;
       life: number;
     }> = [];
 
-    const mouse = { x: canvas.offsetWidth / 2, y: canvas.offsetHeight / 2, active: false };
-
+    const mouse = { x: -1000, y: -1000, active: false };
     let step = 0;
+    let hidePromptTimeout: number | undefined;
 
     const render = () => {
+      // If not in viewport or tab hidden, pause execution to conserve 100% CPU/battery
+      if (!isVisible || !isTabActive) {
+        return;
+      }
+
       step += 0.015;
       const w = canvas.offsetWidth;
       const h = canvas.offsetHeight;
@@ -55,19 +79,19 @@ export const SensoryInterlude: React.FC = () => {
       const wavesCount = 4;
       for (let i = 0; i < wavesCount; i++) {
         ctx.beginPath();
-        const baseAmp = 20 + i * 12;
+        const baseAmp = 18 + i * 10;
         const freq = 0.003 + i * 0.0012;
         const speed = step * (0.8 + i * 0.4);
 
         ctx.moveTo(0, h);
-        for (let x = 0; x <= w; x += 15) {
+        for (let x = 0; x <= w; x += 18) {
           // Dynamic mouse influence
           const distToMouse = Math.hypot(x - mouse.x, h * 0.5 - mouse.y);
-          const mouseDisp = Math.max(0, 1 - distToMouse / 240) * 35;
+          const mouseDisp = Math.max(0, 1 - distToMouse / 220) * 32;
 
           const y =
             h * 0.45 +
-            i * 30 +
+            i * 28 +
             Math.sin(x * freq + speed) * baseAmp +
             Math.cos(x * freq * 1.5 - speed * 0.7) * (baseAmp * 0.5) -
             mouseDisp;
@@ -91,21 +115,22 @@ export const SensoryInterlude: React.FC = () => {
         ctx.fill();
       }
 
-      // Spawn interactive fluid droplets on mouse or continuous
-      if (mouse.active || Math.random() < 0.3) {
-        const px = mouse.active ? mouse.x + (Math.random() - 0.5) * 40 : Math.random() * w;
-        const py = mouse.active ? mouse.y + (Math.random() - 0.5) * 40 : h * 0.4 + (Math.random() - 0.5) * 80;
+      // Spawn interactive fluid droplets (throttled)
+      if (mouse.active || Math.random() < 0.2) {
+        if (particles.length < 35) {
+          const px = mouse.active ? mouse.x + (Math.random() - 0.5) * 36 : Math.random() * w;
+          const py = mouse.active ? mouse.y + (Math.random() - 0.5) * 36 : h * 0.4 + (Math.random() - 0.5) * 70;
 
-        particles.push({
-          x: px,
-          y: py,
-          vx: (Math.random() - 0.5) * 1.5,
-          vy: -Math.random() * 1.5 - 0.5,
-          radius: Math.random() * 4 + 2,
-          hue: 130 + Math.random() * 25,
-          alpha: 0.6,
-          life: 1,
-        });
+          particles.push({
+            x: px,
+            y: py,
+            vx: (Math.random() - 0.5) * 1.4,
+            vy: -Math.random() * 1.4 - 0.4,
+            radius: Math.random() * 3.5 + 1.5,
+            alpha: 0.55,
+            life: 1,
+          });
+        }
       }
 
       // Update and draw fluid particles
@@ -113,7 +138,7 @@ export const SensoryInterlude: React.FC = () => {
         const p = particles[i];
         p.x += p.vx;
         p.y += p.vy;
-        p.life -= 0.012;
+        p.life -= 0.014;
         p.alpha = p.life * 0.5;
 
         if (p.life <= 0) {
@@ -127,11 +152,57 @@ export const SensoryInterlude: React.FC = () => {
         ctx.fill();
       }
 
-      animationFrameId = requestAnimationFrame(render);
+      // Loop only if reduced motion is false
+      if (!prefersReducedMotion) {
+        animationFrameId = requestAnimationFrame(render);
+      }
     };
 
-    render();
+    const startAnimation = () => {
+      cancelAnimationFrame(animationFrameId);
+      render();
+    };
 
+    const stopAnimation = () => {
+      cancelAnimationFrame(animationFrameId);
+    };
+
+    // IntersectionObserver to completely halt CPU animation when offscreen
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        isVisible = entry.isIntersecting;
+        if (isVisible) {
+          startAnimation();
+        } else {
+          stopAnimation();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(container);
+
+    // Pause animation when user switches tabs or window minimizes
+    const handleVisibilityChange = () => {
+      isTabActive = !document.hidden;
+      if (isTabActive && isVisible) {
+        startAnimation();
+      } else {
+        stopAnimation();
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibilityChange, { passive: true });
+
+    // Window resize (passive, debounced)
+    let resizeTimer: number;
+    const handleResize = () => {
+      window.clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(resizeCanvas, 150);
+    };
+    window.addEventListener('resize', handleResize, { passive: true });
+
+    // High performance pointer tracking without React state re-renders
     const handlePointerMove = (e: MouseEvent | TouchEvent) => {
       const rect = canvas.getBoundingClientRect();
       const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
@@ -139,22 +210,41 @@ export const SensoryInterlude: React.FC = () => {
       mouse.x = clientX - rect.left;
       mouse.y = clientY - rect.top;
       mouse.active = true;
-      setIsInteracting(true);
+
+      // Update overlay prompt visibility via direct DOM style to prevent 60fps React re-renders
+      if (overlayPromptRef.current) {
+        overlayPromptRef.current.style.opacity = '0';
+        window.clearTimeout(hidePromptTimeout);
+        hidePromptTimeout = window.setTimeout(() => {
+          if (overlayPromptRef.current && !mouse.active) {
+            overlayPromptRef.current.style.opacity = '0.4';
+          }
+        }, 3000);
+      }
     };
 
     const handlePointerLeave = () => {
       mouse.active = false;
-      setIsInteracting(false);
+      mouse.x = -1000;
+      mouse.y = -1000;
+      if (overlayPromptRef.current) {
+        overlayPromptRef.current.style.opacity = '0.4';
+      }
     };
 
-    canvas.addEventListener('mousemove', handlePointerMove);
-    canvas.addEventListener('touchmove', handlePointerMove);
-    canvas.addEventListener('mouseleave', handlePointerLeave);
-    canvas.addEventListener('touchend', handlePointerLeave);
+    canvas.addEventListener('mousemove', handlePointerMove, { passive: true });
+    canvas.addEventListener('touchmove', handlePointerMove, { passive: true });
+    canvas.addEventListener('mouseleave', handlePointerLeave, { passive: true });
+    canvas.addEventListener('touchend', handlePointerLeave, { passive: true });
 
     return () => {
+      observer.disconnect();
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
       window.removeEventListener('resize', handleResize);
-      cancelAnimationFrame(animationFrameId);
+      stopAnimation();
+      window.clearTimeout(hidePromptTimeout);
+      window.clearTimeout(resizeTimer);
+
       canvas.removeEventListener('mousemove', handlePointerMove);
       canvas.removeEventListener('touchmove', handlePointerMove);
       canvas.removeEventListener('mouseleave', handlePointerLeave);
@@ -163,7 +253,7 @@ export const SensoryInterlude: React.FC = () => {
   }, [activeMode]);
 
   return (
-    <section className="py-24 lg:py-32 bg-white text-center overflow-hidden">
+    <section ref={containerRef} className="py-24 lg:py-32 bg-white text-center overflow-hidden">
       <div className="max-w-5xl mx-auto px-4 sm:px-8">
         {/* Eyebrow */}
         <p className="text-[11px] font-semibold tracking-[0.25em] text-[#6B7269] uppercase mb-4">
@@ -182,7 +272,7 @@ export const SensoryInterlude: React.FC = () => {
         <div className="relative rounded-3xl overflow-hidden border border-[#BFD8BB] bg-[#F6F9F5] shadow-[0_20px_50px_-20px_rgba(10,12,10,0.08)]">
           <canvas
             ref={canvasRef}
-            className="w-full h-[320px] sm:h-[400px] cursor-grab active:cursor-grabbing block"
+            className="w-full h-[320px] sm:h-[400px] cursor-grab active:cursor-grabbing block touch-pan-y"
           />
 
           {/* Center Floating Label Badge */}
@@ -196,7 +286,7 @@ export const SensoryInterlude: React.FC = () => {
           {/* Interactive Mode Pills Bottom */}
           <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 flex items-center gap-2 glass-panel p-1.5 rounded-full shadow-md border border-[#BFD8BB]">
             <button
-              onClick={() => setActiveMode('flow')}
+              onClick={() => handleModeChange('flow')}
               className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-semibold tracking-wider transition-all cursor-pointer ${
                 activeMode === 'flow'
                   ? 'bg-[#0A0C0A] text-white shadow-xs'
@@ -207,7 +297,7 @@ export const SensoryInterlude: React.FC = () => {
               <span>GENTLE FLOW</span>
             </button>
             <button
-              onClick={() => setActiveMode('ripples')}
+              onClick={() => handleModeChange('ripples')}
               className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-semibold tracking-wider transition-all cursor-pointer ${
                 activeMode === 'ripples'
                   ? 'bg-[#0A0C0A] text-white shadow-xs'
@@ -218,7 +308,7 @@ export const SensoryInterlude: React.FC = () => {
               <span>AROMA RIPPLES</span>
             </button>
             <button
-              onClick={() => setActiveMode('mist')}
+              onClick={() => handleModeChange('mist')}
               className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-semibold tracking-wider transition-all cursor-pointer ${
                 activeMode === 'mist'
                   ? 'bg-[#0A0C0A] text-white shadow-xs'
@@ -230,11 +320,10 @@ export const SensoryInterlude: React.FC = () => {
             </button>
           </div>
 
-          {/* Touch Prompt Overlay */}
+          {/* Touch Prompt Overlay with direct ref transition */}
           <div
-            className={`absolute inset-0 pointer-events-none flex items-center justify-center transition-opacity duration-500 ${
-              isInteracting ? 'opacity-0' : 'opacity-40'
-            }`}
+            ref={overlayPromptRef}
+            className="absolute inset-0 pointer-events-none flex items-center justify-center transition-opacity duration-500 opacity-40"
           >
             <span className="font-sans text-xs tracking-widest text-[#0A0C0A] uppercase bg-white/80 px-4 py-1.5 rounded-full border border-[#BFD8BB]">
               Move cursor or touch to ripple

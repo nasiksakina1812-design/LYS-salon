@@ -83,8 +83,13 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
               {/* Arched Frame Container */}
               <div className="relative rounded-t-[180px] rounded-b-3xl overflow-hidden shadow-[0_24px_50px_-12px_rgba(10,12,10,0.12)] border border-[#BFD8BB] bg-white">
                 <SmartImage
-                  src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=900&q=85"
+                  src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format,compress&fit=crop&w=860&q=80&fm=webp"
+                  srcSet="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format,compress&fit=crop&w=430&q=80&fm=webp 430w, https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format,compress&fit=crop&w=860&q=80&fm=webp 860w"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 430px"
                   alt="Radiant client portrait at LYS Salon & Spa"
+                  width={430}
+                  height={580}
+                  priority={true}
                   className="w-full h-[520px] sm:h-[580px] object-cover object-top filter brightness-[0.98] contrast-[1.02]"
                   fallbackTitle="Bespoke Radiance"
                   fallbackSubtitle="Architectural beauty rituals tailored to your facial contours"

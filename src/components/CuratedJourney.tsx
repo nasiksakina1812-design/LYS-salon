@@ -40,8 +40,14 @@ export const CuratedJourney: React.FC<CuratedJourneyProps> = ({
             <div className="relative p-3 pb-0">
               <div className="relative rounded-xl overflow-hidden aspect-[4/5] bg-[#E7F1E5]">
                 <SmartImage
-                  src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80"
+                  src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format,compress&fit=crop&w=760&q=80&fm=webp"
+                  srcSet="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format,compress&fit=crop&w=380&q=80&fm=webp 380w, https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format,compress&fit=crop&w=760&q=80&fm=webp 760w"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 380px"
                   alt="Architectural strand sculpting"
+                  width={400}
+                  height={500}
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   fallbackTitle="Couture Hair Sculpting"
                   fallbackSubtitle="Tailored facial framing and natural movement"
@@ -78,8 +84,14 @@ export const CuratedJourney: React.FC<CuratedJourneyProps> = ({
             <div className="relative p-3 pb-0">
               <div className="relative rounded-xl overflow-hidden aspect-[4/5] bg-[#E7F1E5]">
                 <SmartImage
-                  src="https://images.unsplash.com/photo-1608248597359-57e0e7a256a2?auto=format&fit=crop&w=800&q=80"
+                  src="https://images.unsplash.com/photo-1608248597359-57e0e7a256a2?auto=format,compress&fit=crop&w=760&q=80&fm=webp"
+                  srcSet="https://images.unsplash.com/photo-1608248597359-57e0e7a256a2?auto=format,compress&fit=crop&w=380&q=80&fm=webp 380w, https://images.unsplash.com/photo-1608248597359-57e0e7a256a2?auto=format,compress&fit=crop&w=760&q=80&fm=webp 760w"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 380px"
                   alt="Botanical head spa infusion preparation"
+                  width={400}
+                  height={500}
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   fallbackTitle="Botanical Herbal Oils"
                   fallbackSubtitle="Clean cold-pressed extracts for deep scalp therapy"
@@ -113,8 +125,14 @@ export const CuratedJourney: React.FC<CuratedJourneyProps> = ({
             <div className="relative p-3 pb-0">
               <div className="relative rounded-xl overflow-hidden aspect-[4/5] bg-[#E7F1E5]">
                 <SmartImage
-                  src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=800&q=80"
+                  src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format,compress&fit=crop&w=760&q=80&fm=webp"
+                  srcSet="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format,compress&fit=crop&w=380&q=80&fm=webp 380w, https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format,compress&fit=crop&w=760&q=80&fm=webp 760w"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 380px"
                   alt="Interior sanctuary architecture"
+                  width={400}
+                  height={500}
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   fallbackTitle="Architectural Stillness"
                   fallbackSubtitle="Fluted lime plaster and arched backlit mirrors"

@@ -110,12 +110,19 @@ export const ReservationsSection: React.FC<ReservationsSectionProps> = ({
 
               {/* Sanctuary Location Map Preview */}
               <div className="relative rounded-2xl overflow-hidden aspect-[16/8] bg-[#E7F1E5] border border-[#BFD8BB] flex items-center justify-center group shadow-inner">
-                <img
-                  src="/assets/sanctuary_map.png"
-                  alt="Map location of LYS Salon & Spa Sanctuary at Janata Estate, Lower Parel"
-                  className="w-full h-full object-cover filter contrast-[1.05] brightness-[0.98] transition-transform duration-700 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-[#0A0C0A]/10 group-hover:bg-transparent transition-colors" />
+                <picture className="w-full h-full">
+                  <source srcSet="/assets/sanctuary_map.webp" type="image/webp" />
+                  <img
+                    src="/assets/sanctuary_map.png"
+                    alt="Map location of LYS Salon & Spa Sanctuary at Janata Estate, Lower Parel"
+                    width={400}
+                    height={200}
+                    loading="lazy"
+                    decoding="async"
+                    className="w-full h-full object-cover filter contrast-[1.05] brightness-[0.98] transition-transform duration-700 group-hover:scale-105"
+                  />
+                </picture>
+                <div className="absolute inset-0 bg-[#0A0C0A]/10 group-hover:bg-transparent transition-colors pointer-events-none" />
 
                 <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
                   <div className="relative mb-2">

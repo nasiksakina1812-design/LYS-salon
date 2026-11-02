@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState } from 'react';
+import React, { useState, useCallback, Suspense } from 'react';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { PhilosophyBanner } from './components/PhilosophyBanner';
@@ -14,26 +14,44 @@ import { SpaceArchitecture } from './components/SpaceArchitecture';
 import { PatronReviews } from './components/PatronReviews';
 import { ReservationsSection } from './components/ReservationsSection';
 import { Footer } from './components/Footer';
-import { BookingModal } from './components/BookingModal';
-import { SpaceViewerModal } from './components/SpaceViewerModal';
 import { ServiceItem } from './types';
+
+// Code-split modals so their bundle is only downloaded on demand
+const BookingModal = React.lazy(() =>
+  import('./components/BookingModal').then((m) => ({ default: m.BookingModal }))
+);
+const SpaceViewerModal = React.lazy(() =>
+  import('./components/SpaceViewerModal').then((m) => ({ default: m.SpaceViewerModal }))
+);
 
 export default function App() {
   const [isBookingOpen, setIsBookingOpen] = useState(false);
   const [isSpaceViewerOpen, setIsSpaceViewerOpen] = useState(false);
   const [selectedService, setSelectedService] = useState<ServiceItem | null>(null);
 
-  const handleOpenBooking = () => {
+  const handleOpenBooking = useCallback(() => {
     setSelectedService(null);
     setIsBookingOpen(true);
-  };
+  }, []);
 
-  const handleSelectServiceItem = (service: ServiceItem) => {
+  const handleCloseBooking = useCallback(() => {
+    setIsBookingOpen(false);
+  }, []);
+
+  const handleOpenSpaceViewer = useCallback(() => {
+    setIsSpaceViewerOpen(true);
+  }, []);
+
+  const handleCloseSpaceViewer = useCallback(() => {
+    setIsSpaceViewerOpen(false);
+  }, []);
+
+  const handleSelectServiceItem = useCallback((service: ServiceItem) => {
     setSelectedService(service);
     setIsBookingOpen(true);
-  };
+  }, []);
 
-  const handleSelectServiceByName = (serviceName: string) => {
+  const handleSelectServiceByName = useCallback((serviceName: string) => {
     setSelectedService({
       id: 'quick-select',
       name: serviceName,
@@ -42,7 +60,7 @@ export default function App() {
       category: 'Curated Ritual',
     });
     setIsBookingOpen(true);
-  };
+  }, []);
 
   return (
     <div className="min-h-screen bg-white text-[#0A0C0A] flex flex-col font-sans selection:bg-[#BFD8BB] selection:text-[#0A0C0A]">
@@ -59,7 +77,7 @@ export default function App() {
         {/* Curated Journey (3 Cards) */}
         <CuratedJourney
           onSelectService={handleSelectServiceByName}
-          onOpenSpaceViewer={() => setIsSpaceViewerOpen(true)}
+          onOpenSpaceViewer={handleOpenSpaceViewer}
         />
 
         {/* Services Dossier (Accordions 01-05) */}
@@ -73,7 +91,7 @@ export default function App() {
 
         {/* Space & Architecture Section */}
         <SpaceArchitecture
-          onOpenSpaceViewer={() => setIsSpaceViewerOpen(true)}
+          onOpenSpaceViewer={handleOpenSpaceViewer}
         />
 
         {/* Patron Reviews & Google Verified Score */}
@@ -86,18 +104,22 @@ export default function App() {
       {/* Footer */}
       <Footer />
 
-      {/* Booking Concierge Modal */}
-      <BookingModal
-        isOpen={isBookingOpen}
-        onClose={() => setIsBookingOpen(false)}
-        preselectedService={selectedService}
-      />
-
-      {/* Architecture Space Walkthrough Modal */}
-      <SpaceViewerModal
-        isOpen={isSpaceViewerOpen}
-        onClose={() => setIsSpaceViewerOpen(false)}
-      />
+      {/* Code-split Modals with Suspense fallback */}
+      <Suspense fallback={null}>
+        {isBookingOpen && (
+          <BookingModal
+            isOpen={isBookingOpen}
+            onClose={handleCloseBooking}
+            preselectedService={selectedService}
+          />
+        )}
+        {isSpaceViewerOpen && (
+          <SpaceViewerModal
+            isOpen={isSpaceViewerOpen}
+            onClose={handleCloseSpaceViewer}
+          />
+        )}
+      </Suspense>
     </div>
   );
 }

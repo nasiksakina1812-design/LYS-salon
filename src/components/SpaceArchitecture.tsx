@@ -59,8 +59,14 @@ export const SpaceArchitecture: React.FC<SpaceArchitectureProps> = ({
           <div className="lg:col-span-7 flex flex-col justify-between rounded-3xl bg-white border border-[#BFD8BB] overflow-hidden shadow-[0_20px_40px_-15px_rgba(10,12,10,0.06)] group">
             <div className="relative aspect-[16/11] sm:aspect-[16/10] bg-[#E7F1E5] overflow-hidden">
               <SmartImage
-                src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1200&q=85"
+                src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format,compress&fit=crop&w=1000&q=80&fm=webp"
+                srcSet="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format,compress&fit=crop&w=600&q=80&fm=webp 600w, https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format,compress&fit=crop&w=1000&q=80&fm=webp 1000w"
+                sizes="(max-width: 1024px) 100vw, 700px"
                 alt="Styling Atelier at LYS Salon Lower Parel"
+                width={700}
+                height={450}
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
                 fallbackTitle="Styling Atelier"
                 fallbackSubtitle="Arched fluted mirrors and natural illumination"
@@ -129,8 +135,14 @@ export const SpaceArchitecture: React.FC<SpaceArchitectureProps> = ({
             {/* Top: Aromatherapy Bar Photo */}
             <div className="relative rounded-3xl overflow-hidden bg-white border border-[#BFD8BB] shadow-[0_12px_32px_-12px_rgba(10,12,10,0.06)] group aspect-[16/10]">
               <SmartImage
-                src="https://images.unsplash.com/photo-1608248597359-57e0e7a256a2?auto=format&fit=crop&w=800&q=80"
+                src="https://images.unsplash.com/photo-1608248597359-57e0e7a256a2?auto=format,compress&fit=crop&w=800&q=80&fm=webp"
+                srcSet="https://images.unsplash.com/photo-1608248597359-57e0e7a256a2?auto=format,compress&fit=crop&w=400&q=80&fm=webp 400w, https://images.unsplash.com/photo-1608248597359-57e0e7a256a2?auto=format,compress&fit=crop&w=800&q=80&fm=webp 800w"
+                sizes="(max-width: 1024px) 100vw, 500px"
                 alt="Aromatherapy Bar at LYS"
+                width={500}
+                height={320}
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 fallbackTitle="Aromatherapy Bar"
                 fallbackSubtitle="Artisanal organic tinctures & cold-pressed oils"
