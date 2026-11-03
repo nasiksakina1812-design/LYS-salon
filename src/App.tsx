@@ -16,6 +16,13 @@ import { ReservationsSection } from './components/ReservationsSection';
 import { Footer } from './components/Footer';
 import { ServiceItem } from './types';
 
+// Signature Luxury Animation Primitives & Providers
+import { BrandLoader } from './components/animations/BrandLoader';
+import { SmoothScrollProvider } from './components/animations/SmoothScrollProvider';
+import { ScrollStorytelling } from './components/animations/ScrollStorytelling';
+import { SectionDividerWave } from './components/animations/SectionDividerWave';
+import { ANIMATION_CONFIG } from './components/animations/animationConfig';
+
 // Code-split modals so their bundle is only downloaded on demand
 const BookingModal = React.lazy(() =>
   import('./components/BookingModal').then((m) => ({ default: m.BookingModal }))
@@ -62,64 +69,104 @@ export default function App() {
     setIsBookingOpen(true);
   }, []);
 
+  const isModalActive = isBookingOpen || isSpaceViewerOpen;
+
   return (
-    <div className="min-h-screen bg-white text-[#0A0C0A] flex flex-col font-sans selection:bg-[#BFD8BB] selection:text-[#0A0C0A]">
-      {/* Navigation */}
-      <Navbar onOpenBooking={handleOpenBooking} />
+    <SmoothScrollProvider isModalOpen={isModalActive}>
+      {/* 10. LOADER: Elegant intro (<2.5s) with thin drawn line, comb sweep, and brand unveil */}
+      {ANIMATION_CONFIG.features.enableBrandLoader && <BrandLoader />}
 
-      <main className="flex-1">
-        {/* Hero Section */}
-        <Hero onOpenBooking={handleOpenBooking} />
+      <div className="min-h-screen bg-white text-[#0A0C0A] flex flex-col font-sans selection:bg-[#BFD8BB] selection:text-[#0A0C0A]">
+        {/* Navigation */}
+        <Navbar onOpenBooking={handleOpenBooking} />
 
-        {/* Philosophy Dark Green Banner */}
-        <PhilosophyBanner />
+        <main className="flex-1">
+          {/* 2. HERO SECTION with Flowing Hair Strands & Shifting Gradient Mesh */}
+          <Hero onOpenBooking={handleOpenBooking} />
 
-        {/* Curated Journey (3 Cards) */}
-        <CuratedJourney
-          onSelectService={handleSelectServiceByName}
-          onOpenSpaceViewer={handleOpenSpaceViewer}
-        />
-
-        {/* Services Dossier (Accordions 01-05) */}
-        <ServicesDossier
-          onSelectServiceItem={handleSelectServiceItem}
-          onOpenBooking={handleOpenBooking}
-        />
-
-        {/* Sensory Interlude: Interactive Fluid Touch Canvas */}
-        <SensoryInterlude />
-
-        {/* Space & Architecture Section */}
-        <SpaceArchitecture
-          onOpenSpaceViewer={handleOpenSpaceViewer}
-        />
-
-        {/* Patron Reviews & Google Verified Score */}
-        <PatronReviews />
-
-        {/* Reservations & Location */}
-        <ReservationsSection onOpenBooking={handleOpenBooking} />
-      </main>
-
-      {/* Footer */}
-      <Footer />
-
-      {/* Code-split Modals with Suspense fallback */}
-      <Suspense fallback={null}>
-        {isBookingOpen && (
-          <BookingModal
-            isOpen={isBookingOpen}
-            onClose={handleCloseBooking}
-            preselectedService={selectedService}
+          {/* 9. SECTION TRANSITION: Organic Hair Swoop from White to Deep Obsidian */}
+          <SectionDividerWave
+            fromColor="#FFFFFF"
+            toColor="#0A0C0A"
+            variant="hairSwoop"
+            className="-mb-[1px]"
           />
-        )}
-        {isSpaceViewerOpen && (
-          <SpaceViewerModal
-            isOpen={isSpaceViewerOpen}
-            onClose={handleCloseSpaceViewer}
+
+          {/* Philosophy Dark Green Banner */}
+          <PhilosophyBanner />
+
+          {/* 9. SECTION TRANSITION: Hair Swoop from Obsidian to Soft Mint */}
+          <SectionDividerWave
+            fromColor="#0A0C0A"
+            toColor="#F6F9F5"
+            variant="hairSwoop"
+            className="-mt-[1px] -mb-[1px]"
           />
-        )}
-      </Suspense>
-    </div>
+
+          {/* 7. CURATED JOURNEY with Fanned Card Stack & 5. Before/After Scissor Slider */}
+          <CuratedJourney
+            onSelectService={handleSelectServiceByName}
+            onOpenSpaceViewer={handleOpenSpaceViewer}
+          />
+
+          {/* 9. SECTION TRANSITION: Flowing Hair Silhouette into Ritual Storytelling */}
+          <SectionDividerWave
+            fromColor="#F6F9F5"
+            toColor="#0A0C0A"
+            variant="hairSwoop"
+            className="-mb-[1px]"
+          />
+
+          {/* 8. SCROLL STORYTELLING: Pinned 5-Step Continuous Journey with Dynamic Progress Line */}
+          <ScrollStorytelling onOpenBooking={handleOpenBooking} />
+
+          {/* 9. SECTION TRANSITION: Hair Swoop from Obsidian back to White */}
+          <SectionDividerWave
+            fromColor="#0A0C0A"
+            toColor="#FFFFFF"
+            variant="hairSwoop"
+            className="-mt-[1px] -mb-[1px]"
+          />
+
+          {/* Services Dossier (Accordions 01-05) */}
+          <ServicesDossier
+            onSelectServiceItem={handleSelectServiceItem}
+            onOpenBooking={handleOpenBooking}
+          />
+
+          {/* Sensory Interlude: Interactive Fluid Touch Canvas */}
+          <SensoryInterlude />
+
+          {/* Space & Architecture Section */}
+          <SpaceArchitecture onOpenSpaceViewer={handleOpenSpaceViewer} />
+
+          {/* 11. PATRON REVIEWS with Floating Sparkles & Infinite Marquee that slows on hover */}
+          <PatronReviews />
+
+          {/* Reservations & Location */}
+          <ReservationsSection onOpenBooking={handleOpenBooking} />
+        </main>
+
+        {/* Footer */}
+        <Footer />
+
+        {/* Code-split Modals with Suspense fallback */}
+        <Suspense fallback={null}>
+          {isBookingOpen && (
+            <BookingModal
+              isOpen={isBookingOpen}
+              onClose={handleCloseBooking}
+              preselectedService={selectedService}
+            />
+          )}
+          {isSpaceViewerOpen && (
+            <SpaceViewerModal
+              isOpen={isSpaceViewerOpen}
+              onClose={handleCloseSpaceViewer}
+            />
+          )}
+        </Suspense>
+      </div>
+    </SmoothScrollProvider>
   );
 }

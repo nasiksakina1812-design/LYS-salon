@@ -88,8 +88,7 @@ export const SmartImage: React.FC<SmartImageProps> = ({
         height={height}
         loading={computedLoading}
         decoding={computedDecoding}
-        // @ts-expect-error React 19 types support fetchPriority, fallback for strict TS
-        fetchpriority={computedFetchPriority}
+        fetchPriority={computedFetchPriority}
         referrerPolicy="no-referrer"
         onLoad={() => setLoaded(true)}
         onError={() => setError(true)}

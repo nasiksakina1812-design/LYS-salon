@@ -1,61 +1,104 @@
 import React from 'react';
 import { ArrowRight, Star, ArrowDown, MapPin } from 'lucide-react';
+import { motion, useReducedMotion } from 'motion/react';
 import { SmartImage } from './SmartImage';
+import { LUXURY_EASE } from './animations/MotionPrimitives';
+import { HeroHairStrands } from './animations/HeroHairStrands';
+import { MaskedHeadingReveal } from './animations/MaskedHeadingReveal';
+import { MagneticButton } from './animations/MagneticButton';
 
 interface HeroProps {
   onOpenBooking: () => void;
 }
 
 export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <section className="relative pt-28 lg:pt-36 pb-16 lg:pb-24 overflow-hidden bg-white">
-      {/* Soft pastel ambient background aura */}
-      <div className="absolute top-10 right-0 w-[500px] h-[500px] bg-[#E7F1E5]/60 rounded-full blur-3xl pointer-events-none -z-10" />
-      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#F6F9F5] rounded-full blur-2xl pointer-events-none -z-10" />
+      {/* Hair-Strand Hero: Silky strands waving in breeze with mouse deflection and shifting brand gradient mesh */}
+      <HeroHairStrands />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
           {/* Left Column: Editorial Typography & Actions */}
           <div className="lg:col-span-7 flex flex-col justify-center pr-0 lg:pr-6 z-10">
             {/* Location Tag */}
-            <div className="inline-flex items-center gap-2 mb-6 text-[11px] font-semibold tracking-[0.22em] text-[#0A0C0A] uppercase">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#BFD8BB] border border-[#6C8E68]" />
+            <motion.div
+              initial={shouldReduceMotion ? {} : { opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, ease: LUXURY_EASE }}
+              className="inline-flex items-center gap-2 mb-6 text-[11px] font-semibold tracking-[0.22em] text-[#0A0C0A] uppercase"
+            >
+              <span className="w-2.5 h-2.5 rounded-full bg-[#BFD8BB] border border-[#6C8E68] shadow-xs animate-pulse" />
               <span>LYS SALON & SPA · LOWER PAREL, MUMBAI</span>
-            </div>
+            </motion.div>
 
-            {/* Display Headline */}
+            {/* Display Headline with Masked Character/Word Reveal & Variable-Font Hover Weight Shift */}
             <h1 className="font-serif text-5xl sm:text-6xl xl:text-7xl font-normal leading-[1.08] tracking-[-0.02em] text-[#0A0C0A] text-balance mb-6">
-              Beauty that <br />
-              <span className="italic font-normal text-[#6C8E68]">feels like you.</span>
+              <span className="block">
+                <MaskedHeadingReveal as="span" delay={0.1} highlightWords={['Beauty']}>
+                  Beauty that
+                </MaskedHeadingReveal>
+              </span>
+              <span className="block mt-1">
+                <MaskedHeadingReveal
+                  as="span"
+                  delay={0.25}
+                  italicWords={['feels', 'like', 'you']}
+                  highlightWords={['feels', 'like', 'you']}
+                >
+                  feels like you.
+                </MaskedHeadingReveal>
+              </span>
             </h1>
 
             {/* Editorial Body Copy */}
-            <p className="font-sans text-base sm:text-lg leading-relaxed text-[#6B7269] max-w-xl mb-9 font-normal">
+            <motion.p
+              initial={shouldReduceMotion ? {} : { opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.35, ease: LUXURY_EASE }}
+              className="font-sans text-base sm:text-lg leading-relaxed text-[#6B7269] max-w-xl mb-9 font-normal"
+            >
               Step into a world of thoughtful beauty rituals, personal expression,
               and moments made entirely for you. Filtered through an
               architectural, restorative lens.
-            </p>
+            </motion.p>
 
-            {/* Interactive CTAs */}
-            <div className="flex flex-wrap items-center gap-4 mb-14">
-              <button
+            {/* Interactive Magnetic CTAs */}
+            <motion.div
+              initial={shouldReduceMotion ? {} : { opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.48, ease: LUXURY_EASE }}
+              className="flex flex-wrap items-center gap-4 mb-14"
+            >
+              <MagneticButton
                 onClick={onOpenBooking}
-                className="inline-flex items-center gap-3 px-7 py-3.5 rounded-full bg-[#0A0C0A] text-white text-xs font-semibold tracking-[0.14em] uppercase hover:bg-[#BFD8BB] hover:text-[#0A0C0A] hover:border-[#BFD8BB] hover:shadow-md transition-all active:scale-[0.98] group cursor-pointer border border-[#0A0C0A]"
+                className="px-7 py-3.5 rounded-full bg-[#0A0C0A] text-white text-xs font-semibold tracking-[0.14em] uppercase hover:text-[#0A0C0A] transition-colors active:scale-[0.98] border border-[#0A0C0A] shadow-md group"
               >
                 <span>BOOK YOUR VISIT</span>
-                <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
-              </button>
+                <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
+              </MagneticButton>
 
-              <a
-                href="#experience"
-                className="inline-flex items-center justify-center px-7 py-3.5 rounded-full border border-[#0A0C0A]/20 bg-white text-[#0A0C0A] text-xs font-semibold tracking-[0.14em] uppercase hover:bg-[#E7F1E5] hover:border-[#BFD8BB] transition-colors"
+              <MagneticButton
+                onClick={() => {
+                  const el = document.getElementById('experience');
+                  el?.scrollIntoView({ behavior: 'smooth' });
+                }}
+                fillColor="#E7F1E5"
+                className="px-7 py-3.5 rounded-full border border-[#0A0C0A]/20 bg-white text-[#0A0C0A] text-xs font-semibold tracking-[0.14em] uppercase hover:border-[#BFD8BB] transition-all duration-300"
               >
-                EXPLORE THE EXPERIENCE
-              </a>
-            </div>
+                <span>EXPLORE THE EXPERIENCE</span>
+              </MagneticButton>
+            </motion.div>
 
             {/* Trust Proof & Scroll Cue */}
-            <div className="flex flex-wrap items-center justify-between gap-4 pt-6 border-t border-[#BFD8BB]/50 text-xs text-[#6B7269]">
+            <motion.div
+              initial={shouldReduceMotion ? {} : { opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.6, ease: LUXURY_EASE }}
+              className="flex flex-wrap items-center justify-between gap-4 pt-6 border-t border-[#BFD8BB]/50 text-xs text-[#6B7269]"
+            >
               <div className="flex items-center gap-2.5">
                 <div className="flex items-center text-[#0A0C0A]">
                   {[...Array(5)].map((_, i) => (
@@ -69,42 +112,88 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
 
               <a
                 href="#philosophy"
-                className="flex items-center gap-1.5 text-[11px] font-semibold tracking-[0.16em] text-[#6B7269] hover:text-[#0A0C0A] transition-colors uppercase"
+                className="flex items-center gap-1.5 text-[11px] font-semibold tracking-[0.16em] text-[#6B7269] hover:text-[#0A0C0A] transition-colors uppercase group"
               >
                 <span>SCROLL TO DISCOVER</span>
-                <ArrowDown className="w-3 h-3 animate-bounce text-[#6C8E68]" />
+                <ArrowDown className="w-3 h-3 text-[#6C8E68] transition-transform duration-300 group-hover:translate-y-0.5" />
               </a>
-            </div>
+            </motion.div>
           </div>
 
-          {/* Right Column: Architectural Arched Portrait */}
+          {/* Right Column: Architectural Arched Portrait with Cinematic Mask & Subtle Float */}
           <div className="lg:col-span-5 flex justify-center lg:justify-end">
             <div className="relative w-full max-w-[430px]">
-              {/* Arched Frame Container */}
-              <div className="relative rounded-t-[180px] rounded-b-3xl overflow-hidden shadow-[0_24px_50px_-12px_rgba(10,12,10,0.12)] border border-[#BFD8BB] bg-white">
-                <SmartImage
-                  src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format,compress&fit=crop&w=860&q=80&fm=webp"
-                  srcSet="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format,compress&fit=crop&w=430&q=80&fm=webp 430w, https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format,compress&fit=crop&w=860&q=80&fm=webp 860w"
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 430px"
-                  alt="Radiant client portrait at LYS Salon & Spa"
-                  width={430}
-                  height={580}
-                  priority={true}
-                  className="w-full h-[520px] sm:h-[580px] object-cover object-top filter brightness-[0.98] contrast-[1.02]"
-                  fallbackTitle="Bespoke Radiance"
-                  fallbackSubtitle="Architectural beauty rituals tailored to your facial contours"
-                />
+              {/* Arched Frame Container with Cinematic entrance reveal */}
+              <motion.div
+                initial={
+                  shouldReduceMotion
+                    ? {}
+                    : {
+                        opacity: 0,
+                        clipPath: 'inset(12% 0% 0% 0% round 180px 180px 24px 24px)',
+                        scale: 0.97,
+                      }
+                }
+                animate={{
+                  opacity: 1,
+                  clipPath: 'inset(0% 0% 0% 0% round 180px 180px 24px 24px)',
+                  scale: 1,
+                }}
+                transition={{ duration: 1.2, delay: 0.2, ease: LUXURY_EASE }}
+                className="relative rounded-t-[180px] rounded-b-3xl overflow-hidden shadow-[0_24px_50px_-12px_rgba(10,12,10,0.12)] border border-[#BFD8BB] bg-white group"
+              >
+                {/* Slow Ken Burns Movement Layer */}
+                <motion.div
+                  animate={
+                    shouldReduceMotion
+                      ? {}
+                      : {
+                          scale: [1, 1.045, 1],
+                          y: [0, -8, 0],
+                        }
+                  }
+                  transition={{
+                    duration: 16,
+                    repeat: Infinity,
+                    repeatType: 'reverse',
+                    ease: 'easeInOut',
+                  }}
+                  className="w-full h-full will-change-transform"
+                >
+                  <SmartImage
+                    src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format,compress&fit=crop&w=860&q=80&fm=webp"
+                    srcSet="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format,compress&fit=crop&w=430&q=80&fm=webp 430w, https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format,compress&fit=crop&w=860&q=80&fm=webp 860w"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 430px"
+                    alt="Radiant client portrait at LYS Salon & Spa"
+                    width={430}
+                    height={580}
+                    priority={true}
+                    className="w-full h-[520px] sm:h-[580px] object-cover object-top filter brightness-[0.98] contrast-[1.02] transition-transform duration-700"
+                    fallbackTitle="Bespoke Radiance"
+                    fallbackSubtitle="Architectural beauty rituals tailored to your facial contours"
+                  />
+                </motion.div>
 
                 {/* Floating Atelier Badge (Top Right) */}
-                <div className="absolute top-5 right-5 z-10 glass-panel px-3.5 py-1.5 rounded-full flex items-center gap-1.5 shadow-sm border border-[#BFD8BB]">
+                <motion.div
+                  initial={shouldReduceMotion ? {} : { opacity: 0, y: -15, scale: 0.9 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  transition={{ duration: 0.8, delay: 0.65, ease: LUXURY_EASE }}
+                  className="absolute top-5 right-5 z-10 glass-panel px-3.5 py-1.5 rounded-full flex items-center gap-1.5 shadow-sm border border-[#BFD8BB]"
+                >
                   <MapPin className="w-3 h-3 text-[#6C8E68]" />
                   <span className="text-[10px] font-semibold tracking-[0.14em] text-[#0A0C0A] uppercase">
                     LOWER PAREL ATELIER
                   </span>
-                </div>
+                </motion.div>
 
                 {/* Bottom Signature Care Card */}
-                <div className="absolute bottom-4 left-4 right-4 z-10 glass-panel p-4 rounded-2xl flex items-center justify-between gap-3 shadow-lg border border-[#BFD8BB]/70">
+                <motion.div
+                  initial={shouldReduceMotion ? {} : { opacity: 0, y: 25, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  transition={{ duration: 0.8, delay: 0.75, ease: LUXURY_EASE }}
+                  className="absolute bottom-4 left-4 right-4 z-10 glass-panel p-4 rounded-2xl flex items-center justify-between gap-3 shadow-lg border border-[#BFD8BB]/70 transition-transform duration-300 hover:scale-[1.02]"
+                >
                   <div>
                     <span className="block text-[9px] font-semibold tracking-[0.2em] text-[#6B7269] uppercase">
                       SIGNATURE CARE
@@ -116,8 +205,8 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
                   <span className="px-3 py-1 rounded-full bg-[#E7F1E5] border border-[#BFD8BB] text-[10px] font-semibold tracking-wider text-[#0A0C0A] uppercase">
                     PRIVATE RITUAL
                   </span>
-                </div>
-              </div>
+                </motion.div>
+              </motion.div>
             </div>
           </div>
         </div>

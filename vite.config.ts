@@ -28,11 +28,16 @@ export default defineConfig(({command}) => {
             if (id.includes('node_modules/lucide-react')) {
               return 'vendor-icons';
             }
+            if (id.includes('node_modules/motion')) {
+              return 'vendor-motion';
+            }
           },
         },
       },
     },
     server: {
+      port: 3000,
+      host: '0.0.0.0',
       // HMR is disabled in AI Studio via DISABLE_HMR env var.
       // Do not modify—file watching is disabled to prevent flickering during agent edits.
       hmr: process.env.DISABLE_HMR !== 'true',

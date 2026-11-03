@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState, useCallback } from 'react';
 import { Waves, Sparkles, Wind } from 'lucide-react';
+import { TextReveal } from './animations/MotionPrimitives';
 
 export const SensoryInterlude: React.FC = () => {
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -260,12 +261,14 @@ export const SensoryInterlude: React.FC = () => {
           SENSORY INTERLUDE
         </p>
 
-        {/* Display Headline */}
+        {/* Display Headline with TextReveal */}
         <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-normal tracking-tight text-[#0A0C0A] mb-2">
-          TAKE A BREATH.
+          <TextReveal as="span">TAKE A BREATH.</TextReveal>
         </h2>
         <div className="font-serif text-3xl sm:text-4xl lg:text-5xl italic font-normal text-[#6C8E68] mb-12">
-          make it yours.
+          <TextReveal as="span" delay={0.15}>
+            make it yours.
+          </TextReveal>
         </div>
 
         {/* Interactive Responsive Touch Canvas Container */}

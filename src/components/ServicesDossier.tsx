@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { ChevronDown, ChevronUp, ShieldCheck, ArrowUpRight } from 'lucide-react';
+import { ChevronDown, ShieldCheck, ArrowUpRight } from 'lucide-react';
+import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 import { ServiceCategory, ServiceItem } from '../types';
+import { TextReveal, LUXURY_EASE } from './animations/MotionPrimitives';
 
 interface ServicesDossierProps {
   onSelectServiceItem: (service: ServiceItem) => void;
@@ -199,6 +201,7 @@ export const ServicesDossier: React.FC<ServicesDossierProps> = ({
   onOpenBooking,
 }) => {
   const [openIndex, setOpenIndex] = useState<number>(0);
+  const shouldReduceMotion = useReducedMotion();
 
   const toggleAccordion = (index: number) => {
     setOpenIndex(openIndex === index ? -1 : index);
@@ -214,18 +217,20 @@ export const ServicesDossier: React.FC<ServicesDossierProps> = ({
               SERVICES DOSSIER
             </span>
             <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal tracking-tight text-[#0A0C0A] mb-6">
-              Find your <br />
-              ritual.
+              <TextReveal as="span">Find your</TextReveal> <br />
+              <TextReveal as="span" delay={0.15}>
+                ritual.
+              </TextReveal>
             </h2>
             <p className="font-sans text-sm sm:text-base leading-relaxed text-[#6B7269] mb-10">
               Every appointment begins with an in-depth dialogue to harmonize
               your desired aesthetic with hair and skin integrity.
             </p>
 
-            {/* Concierge Assurance Card */}
-            <div className="p-6 rounded-2xl bg-[#F6F9F5] border border-[#BFD8BB] shadow-sm">
+            {/* Concierge Assurance Card with Subtle Hover Tilt */}
+            <div className="p-6 rounded-2xl bg-[#F6F9F5] border border-[#BFD8BB] shadow-sm transition-all duration-300 hover:border-[#6C8E68] hover:shadow-md group">
               <div className="flex items-center gap-3 mb-3">
-                <div className="w-8 h-8 rounded-full bg-[#E7F1E5] border border-[#BFD8BB] flex items-center justify-center text-[#0A0C0A]">
+                <div className="w-8 h-8 rounded-full bg-[#E7F1E5] border border-[#BFD8BB] flex items-center justify-center text-[#0A0C0A] transition-transform duration-300 group-hover:scale-110">
                   <ShieldCheck className="w-4 h-4 text-[#6C8E68]" />
                 </div>
                 <h3 className="font-serif text-base font-medium text-[#0A0C0A]">
@@ -238,15 +243,15 @@ export const ServicesDossier: React.FC<ServicesDossierProps> = ({
               </p>
               <button
                 onClick={onOpenBooking}
-                className="inline-flex items-center gap-1.5 text-[11px] font-semibold tracking-[0.14em] text-[#0A0C0A] hover:text-[#6C8E68] uppercase group cursor-pointer"
+                className="inline-flex items-center gap-1.5 text-[11px] font-semibold tracking-[0.14em] text-[#0A0C0A] hover:text-[#6C8E68] uppercase group/btn cursor-pointer transition-colors"
               >
                 <span>DIRECT CONCIERGE BOOKING</span>
-                <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
               </button>
             </div>
           </div>
 
-          {/* Right Column: Interactive Accordion Services */}
+          {/* Right Column: Animated Accordion Services with Fluid Framer Motion Transitions */}
           <div className="lg:col-span-7 space-y-4">
             {serviceCategories.map((cat, idx) => {
               const isOpen = openIndex === idx;
@@ -261,72 +266,89 @@ export const ServicesDossier: React.FC<ServicesDossierProps> = ({
                   {/* Accordion Trigger Header */}
                   <button
                     onClick={() => toggleAccordion(idx)}
-                    className="w-full p-6 text-left flex items-center justify-between gap-4 transition-colors hover:bg-[#F6F9F5] cursor-pointer rounded-2xl"
+                    className="w-full p-6 text-left flex items-center justify-between gap-4 transition-colors hover:bg-[#F6F9F5] cursor-pointer rounded-2xl group"
                   >
                     <div className="flex items-baseline gap-4">
-                      <span className="font-sans text-xs font-bold text-[#6C8E68] tracking-widest">
+                      <span className="font-sans text-xs font-bold text-[#6C8E68] tracking-widest transition-transform duration-300 group-hover:translate-x-0.5">
                         {cat.number}
                       </span>
-                      <span className="font-serif text-lg sm:text-xl font-normal text-[#0A0C0A]">
+                      <span className="font-serif text-lg sm:text-xl font-normal text-[#0A0C0A] group-hover:text-[#6C8E68] transition-colors">
                         {cat.title}
                       </span>
                     </div>
 
-                    <div className="w-8 h-8 rounded-full border border-[#BFD8BB] flex items-center justify-center text-[#0A0C0A] shrink-0 bg-[#E7F1E5]">
-                      {isOpen ? (
-                        <ChevronUp className="w-4 h-4 text-[#0A0C0A]" />
-                      ) : (
-                        <ChevronDown className="w-4 h-4 text-[#0A0C0A]" />
-                      )}
-                    </div>
+                    <motion.div
+                      animate={{ rotate: isOpen ? 180 : 0 }}
+                      transition={{ duration: 0.3, ease: LUXURY_EASE }}
+                      className="w-8 h-8 rounded-full border border-[#BFD8BB] flex items-center justify-center text-[#0A0C0A] shrink-0 bg-[#E7F1E5]"
+                    >
+                      <ChevronDown className="w-4 h-4 text-[#0A0C0A]" />
+                    </motion.div>
                   </button>
 
-                  {/* Accordion Body */}
-                  {isOpen && (
-                    <div className="px-6 pb-6 pt-2 border-t border-[#BFD8BB]/40 animate-in fade-in duration-200">
-                      <p className="font-sans text-xs sm:text-sm text-[#6B7269] leading-relaxed mb-6">
-                        {cat.summary}
-                      </p>
+                  {/* Accordion Body with Smooth Height Animation */}
+                  <AnimatePresence initial={false}>
+                    {isOpen && (
+                      <motion.div
+                        initial={shouldReduceMotion ? { opacity: 0 } : { height: 0, opacity: 0 }}
+                        animate={shouldReduceMotion ? { opacity: 1 } : { height: 'auto', opacity: 1 }}
+                        exit={shouldReduceMotion ? { opacity: 0 } : { height: 0, opacity: 0 }}
+                        transition={{ duration: 0.38, ease: LUXURY_EASE }}
+                        className="overflow-hidden"
+                      >
+                        <div className="px-6 pb-6 pt-2 border-t border-[#BFD8BB]/40">
+                          <p className="font-sans text-xs sm:text-sm text-[#6B7269] leading-relaxed mb-6">
+                            {cat.summary}
+                          </p>
 
-                      <div className="space-y-3">
-                        {cat.services.map((item) => (
-                          <div
-                            key={item.id}
-                            className="p-4 rounded-xl bg-[#F6F9F5] border border-[#BFD8BB]/50 hover:border-[#BFD8BB] hover:bg-[#E7F1E5]/40 transition-all group flex flex-col sm:flex-row sm:items-center justify-between gap-3"
-                          >
-                            <div className="flex-1 pr-2">
-                              <div className="flex items-baseline justify-between gap-2 sm:justify-start">
-                                <h4 className="font-serif text-base font-normal text-[#0A0C0A] group-hover:text-[#6C8E68] transition-colors">
-                                  {item.name}
-                                </h4>
-                                <span className="text-[11px] font-sans text-[#6B7269]">
-                                  ({item.duration})
-                                </span>
-                              </div>
-                              {item.description && (
-                                <p className="font-sans text-xs text-[#6B7269] mt-1 line-clamp-1">
-                                  {item.description}
-                                </p>
-                              )}
-                            </div>
-
-                            <div className="flex items-center justify-between sm:justify-end gap-4 shrink-0 pt-2 sm:pt-0 border-t sm:border-t-0 border-[#BFD8BB]/40">
-                              <span className="font-sans text-sm font-semibold text-[#0A0C0A] tabular-nums">
-                                {item.price}
-                              </span>
-
-                              <button
-                                onClick={() => onSelectServiceItem(item)}
-                                className="px-3.5 py-1.5 rounded-full bg-[#0A0C0A] text-white text-[10px] font-semibold tracking-wider uppercase hover:bg-[#BFD8BB] hover:text-[#0A0C0A] transition-colors active:scale-95 cursor-pointer shadow-2xs"
+                          <div className="space-y-3">
+                            {cat.services.map((item, itemIdx) => (
+                              <motion.div
+                                key={item.id}
+                                initial={shouldReduceMotion ? {} : { opacity: 0, y: 8 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{
+                                  duration: 0.4,
+                                  delay: itemIdx * 0.04,
+                                  ease: LUXURY_EASE,
+                                }}
+                                className="p-4 rounded-xl bg-[#F6F9F5] border border-[#BFD8BB]/50 hover:border-[#6C8E68] hover:bg-[#E7F1E5]/40 transition-all duration-300 group/item flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-2xs hover:shadow-xs"
                               >
-                                SELECT
-                              </button>
-                            </div>
+                                <div className="flex-1 pr-2">
+                                  <div className="flex items-baseline justify-between gap-2 sm:justify-start">
+                                    <h4 className="font-serif text-base font-normal text-[#0A0C0A] group-hover/item:text-[#6C8E68] transition-colors">
+                                      {item.name}
+                                    </h4>
+                                    <span className="text-[11px] font-sans text-[#6B7269]">
+                                      ({item.duration})
+                                    </span>
+                                  </div>
+                                  {item.description && (
+                                    <p className="font-sans text-xs text-[#6B7269] mt-1 line-clamp-1">
+                                      {item.description}
+                                    </p>
+                                  )}
+                                </div>
+
+                                <div className="flex items-center justify-between sm:justify-end gap-4 shrink-0 pt-2 sm:pt-0 border-t sm:border-t-0 border-[#BFD8BB]/40">
+                                  <span className="font-sans text-sm font-semibold text-[#0A0C0A] tabular-nums">
+                                    {item.price}
+                                  </span>
+
+                                  <button
+                                    onClick={() => onSelectServiceItem(item)}
+                                    className="px-3.5 py-1.5 rounded-full bg-[#0A0C0A] text-white text-[10px] font-semibold tracking-wider uppercase hover:bg-[#BFD8BB] hover:text-[#0A0C0A] transition-all active:scale-95 cursor-pointer shadow-2xs"
+                                  >
+                                    SELECT
+                                  </button>
+                                </div>
+                              </motion.div>
+                            ))}
                           </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
               );
             })}

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { X, ChevronLeft, ChevronRight, Layers, Eye } from 'lucide-react';
+import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 import { SmartImage } from './SmartImage';
+import { LUXURY_EASE } from './animations/MotionPrimitives';
 
 interface SpaceViewerModalProps {
   isOpen: boolean;
@@ -12,6 +14,7 @@ export const SpaceViewerModal: React.FC<SpaceViewerModalProps> = ({
   onClose,
 }) => {
   const [activeTab, setActiveTab] = useState<number>(0);
+  const shouldReduceMotion = useReducedMotion();
 
   const spaces = [
     {
@@ -58,8 +61,14 @@ export const SpaceViewerModal: React.FC<SpaceViewerModalProps> = ({
   const currentSpace = spaces[activeTab];
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/75 backdrop-blur-md animate-in fade-in duration-200">
-      <div className="relative w-full max-w-4xl bg-white rounded-3xl border border-[#BFD8BB] shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/80 backdrop-blur-md">
+      <motion.div
+        initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.96, y: 15 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.96, y: 15 }}
+        transition={{ duration: 0.35, ease: LUXURY_EASE }}
+        className="relative w-full max-w-4xl bg-white rounded-3xl border border-[#BFD8BB] shadow-2xl overflow-hidden flex flex-col max-h-[90vh]"
+      >
         {/* Modal Top Bar */}
         <div className="p-5 sm:p-6 bg-[#F6F9F5] border-b border-[#BFD8BB]/50 flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -86,18 +95,29 @@ export const SpaceViewerModal: React.FC<SpaceViewerModalProps> = ({
 
         {/* Image Showcase Area */}
         <div className="relative aspect-[16/10] bg-[#0A0C0A] overflow-hidden flex-1 min-h-[300px]">
-          <SmartImage
-            src={currentSpace.image}
-            alt={currentSpace.title}
-            className="w-full h-full object-cover"
-            fallbackTitle={currentSpace.title}
-            fallbackSubtitle={currentSpace.desc}
-          />
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentSpace.image}
+              initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 1.04 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.98 }}
+              transition={{ duration: 0.45, ease: LUXURY_EASE }}
+              className="w-full h-full"
+            >
+              <SmartImage
+                src={currentSpace.image}
+                alt={currentSpace.title}
+                className="w-full h-full object-cover"
+                fallbackTitle={currentSpace.title}
+                fallbackSubtitle={currentSpace.desc}
+              />
+            </motion.div>
+          </AnimatePresence>
 
           {/* Nav arrows */}
           <button
             onClick={() => setActiveTab((prev) => (prev - 1 + spaces.length) % spaces.length)}
-            className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm border border-[#BFD8BB] flex items-center justify-center text-[#0A0C0A] hover:bg-white transition-all cursor-pointer shadow-md"
+            className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm border border-[#BFD8BB] flex items-center justify-center text-[#0A0C0A] hover:bg-white hover:scale-105 active:scale-95 transition-all cursor-pointer shadow-md"
             aria-label="Previous Space"
           >
             <ChevronLeft className="w-5 h-5" />
@@ -105,7 +125,7 @@ export const SpaceViewerModal: React.FC<SpaceViewerModalProps> = ({
 
           <button
             onClick={() => setActiveTab((prev) => (prev + 1) % spaces.length)}
-            className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm border border-[#BFD8BB] flex items-center justify-center text-[#0A0C0A] hover:bg-white transition-all cursor-pointer shadow-md"
+            className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm border border-[#BFD8BB] flex items-center justify-center text-[#0A0C0A] hover:bg-white hover:scale-105 active:scale-95 transition-all cursor-pointer shadow-md"
             aria-label="Next Space"
           >
             <ChevronRight className="w-5 h-5" />
@@ -143,14 +163,14 @@ export const SpaceViewerModal: React.FC<SpaceViewerModalProps> = ({
               <button
                 key={idx}
                 onClick={() => setActiveTab(idx)}
-                className={`h-2 rounded-full transition-all cursor-pointer ${
-                  activeTab === idx ? 'w-8 bg-[#0A0C0A]' : 'w-2 bg-[#BFD8BB]'
+                className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
+                  activeTab === idx ? 'w-8 bg-[#0A0C0A]' : 'w-2 bg-[#BFD8BB] hover:bg-[#6C8E68]'
                 }`}
               />
             ))}
           </div>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };

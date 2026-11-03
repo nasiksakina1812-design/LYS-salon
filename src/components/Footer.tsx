@@ -123,26 +123,14 @@ export const Footer: React.FC = () => {
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-[#6B7269]">
           <p>© {new Date().getFullYear()} LYS Salon & Spa. All rights reserved.</p>
           <div className="flex items-center gap-6">
-            <button
-              onClick={() =>
-                alert(
-                  'LYS Sanctuary Privacy: Patron data and consultation notes are strictly private and never shared.'
-                )
-              }
-              className="hover:text-[#0A0C0A] transition-colors cursor-pointer"
-            >
-              Privacy Policy
-            </button>
-            <button
-              onClick={() =>
-                alert(
-                  'Terms of Retreat: 24-hour rescheduling courtesy is kindly requested to honor our artisans’ focused schedule.'
-                )
-              }
-              className="hover:text-[#0A0C0A] transition-colors cursor-pointer"
-            >
-              Terms of Retreat
-            </button>
+            <span className="text-[#6B7269]">
+              Patron Privacy Guaranteed
+            </span>
+            <span>·</span>
+            <span className="text-[#6B7269]">
+              24h Rescheduling Courtesy
+            </span>
+            <span>·</span>
             <a
               href="tel:09833535960"
               className="hover:text-[#0A0C0A] transition-colors"
