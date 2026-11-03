@@ -9,15 +9,15 @@ export const Footer: React.FC = () => {
           {/* Column 1: Brand & Soul Manifesto */}
           <div className="lg:col-span-5 pr-0 lg:pr-8">
             <h3 className="font-serif text-3xl font-medium tracking-tight text-[#0A0C0A] mb-1">
-              LYS
+              YOUR SALON
             </h3>
             <div className="font-serif italic text-lg text-[#6C8E68] mb-4">
-              Love Your Soul
+              Bespoke Beauty Sanctuary
             </div>
             <p className="font-sans text-xs sm:text-sm text-[#6B7269] leading-relaxed max-w-sm mb-6">
               An elite urban sanctuary filtered through an architectural,
-              editorial lens in the historic textile heart of Lower Parel,
-              Mumbai.
+              editorial lens. Thoughtfully crafted beauty rituals tailored
+              to your personal aesthetic.
             </p>
 
             <div className="flex items-center gap-2 text-xs text-[#0A0C0A]">
@@ -26,9 +26,9 @@ export const Footer: React.FC = () => {
                   <Star key={i} className="w-3.5 h-3.5 fill-[#0A0C0A]" />
                 ))}
               </div>
-              <span className="font-bold tabular-nums">4.9 / 5</span>
+              <span className="font-bold tabular-nums">5.0 / 5</span>
               <span className="text-[#BFD8BB]">·</span>
-              <span className="text-[#6B7269]">507 Google Reviews</span>
+              <span className="text-[#6B7269]">Sample Rating · 500+ Reviews</span>
             </div>
           </div>
 
@@ -38,21 +38,30 @@ export const Footer: React.FC = () => {
               SANCTUARY COORDINATES
             </span>
             <p className="font-sans text-xs text-[#0A0C0A] leading-relaxed mb-3">
-              8A, Janata Estate, Senapati Bapat Marg, above Spice Klub, next to
-              Stanley, Lower Parel, Mumbai, Maharashtra 400013
+              123 Atelier Boulevard, Suite 100, Design District,
+              Your City, State 12345
             </p>
             <div className="space-y-1.5 text-xs">
               <div className="text-[#6B7269]">
                 Concierge:{' '}
                 <a
-                  href="tel:09833535960"
+                  href="tel:+15550000000"
                   className="font-semibold text-[#0A0C0A] hover:text-[#6C8E68]"
                 >
-                  09833535960
+                  +1 (555) 000-0000
+                </a>
+              </div>
+              <div className="text-[#6B7269]">
+                Email:{' '}
+                <a
+                  href="mailto:concierge@yoursalonname.com"
+                  className="font-semibold text-[#0A0C0A] hover:text-[#6C8E68]"
+                >
+                  concierge@yoursalonname.com
                 </a>
               </div>
               <a
-                href="https://maps.google.com/?q=8A+Janata+Estate+Senapati+Bapat+Marg+Lower+Parel+Mumbai"
+                href="https://maps.google.com/?q=Your+Salon+Name+Location"
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center gap-1 text-[11px] font-semibold tracking-wider text-[#0A0C0A] hover:text-[#6C8E68] uppercase mt-1"
@@ -91,7 +100,7 @@ export const Footer: React.FC = () => {
               </li>
               <li>
                 <a href="#find-us" className="hover:text-[#6C8E68] transition-colors">
-                  Visiting Lower Parel
+                  Visiting Our Atelier
                 </a>
               </li>
             </ul>
@@ -121,7 +130,7 @@ export const Footer: React.FC = () => {
 
         {/* Bottom Bar */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-[#6B7269]">
-          <p>© {new Date().getFullYear()} LYS Salon & Spa. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Your Salon Name. All rights reserved.</p>
           <div className="flex items-center gap-6">
             <span className="text-[#6B7269]">
               Patron Privacy Guaranteed
@@ -132,7 +141,7 @@ export const Footer: React.FC = () => {
             </span>
             <span>·</span>
             <a
-              href="tel:09833535960"
+              href="tel:+15550000000"
               className="hover:text-[#0A0C0A] transition-colors"
             >
               Concierge Desk

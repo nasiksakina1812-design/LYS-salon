@@ -1,5 +1,5 @@
 ---
-name: LYS Salon & Spa
+name: Your Salon Name | Luxury Salon & Spa Template
 colors:
   surface: '#fafaf4'
   surface-dim: '#dadad5'
@@ -154,7 +154,7 @@ spacing:
 
 ## Brand & Style
 
-This design system embodies high-fashion tactile luxury for an elite urban sanctuary in Lower Parel, Mumbai. The experience evokes the serenity of restorative wellness filtered through an architectural, editorial lens. It fuses the tactile warmth of limestone, fluted glass, and botanical botanicals with editorial restraint.
+This design system embodies high-fashion tactile luxury for an elite urban sanctuary in Your Location. The experience evokes the serenity of restorative wellness filtered through an architectural, editorial lens. It fuses the tactile warmth of limestone, fluted glass, and botanical botanicals with editorial restraint.
 
 The aesthetic philosophy draws on two primary movements:
 - **Tactile Organic Luxury:** Unhurried negative space, warm textural materiality, sculptural forms, and botanical depth replace clinical salon interfaces.

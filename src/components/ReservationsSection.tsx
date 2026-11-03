@@ -72,15 +72,15 @@ export const ReservationsSection: React.FC<ReservationsSectionProps> = ({
               className="flex flex-wrap items-center gap-4"
             >
               <a
-                href="tel:09833535960"
+                href="tel:+15550000000"
                 className="relative overflow-hidden inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full bg-white text-[#0A0C0A] text-xs font-semibold tracking-[0.14em] uppercase hover:bg-[#BFD8BB] transition-all duration-300 shadow-md active:scale-[0.98] group"
               >
                 <Phone className="w-3.5 h-3.5 text-[#0A0C0A] transition-transform duration-300 group-hover:rotate-12" />
-                <span>CALL TO BOOK: 09833535960</span>
+                <span>CALL TO BOOK: +1 (555) 000-0000</span>
               </a>
 
               <a
-                href="https://maps.google.com/?q=8A+Janata+Estate+Senapati+Bapat+Marg+Lower+Parel+Mumbai"
+                href="https://maps.google.com/?q=Your+Salon+Name+Location"
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full border border-[#BFD8BB]/50 text-white text-xs font-semibold tracking-[0.14em] uppercase hover:bg-[#BFD8BB] hover:text-[#0A0C0A] hover:border-[#BFD8BB] transition-all duration-300"
@@ -109,14 +109,14 @@ export const ReservationsSection: React.FC<ReservationsSectionProps> = ({
                 SANCTUARY ADDRESS
               </span>
               <h3 className="font-serif text-2xl font-normal text-[#0A0C0A] mb-3">
-                LYS Salon & Spa
+                Your Salon Name
               </h3>
 
               <div className="flex items-start gap-2.5 text-xs sm:text-sm text-[#0A0C0A] leading-relaxed mb-6">
                 <MapPin className="w-4 h-4 text-[#6C8E68] shrink-0 mt-0.5" />
                 <span>
-                  8A, Janata Estate, Senapati Bapat Marg, above Spice Klub,
-                  next to Stanley, Lower Parel, Mumbai, Maharashtra 400013
+                  123 Atelier Boulevard, Suite 100, Design District,
+                  Your City, State 12345
                 </span>
               </div>
 
@@ -140,10 +140,10 @@ export const ReservationsSection: React.FC<ReservationsSectionProps> = ({
                 <div className="flex items-center justify-between font-sans pt-1.5 border-t border-[#BFD8BB]/40">
                   <span className="text-[#6B7269]">Direct Desk</span>
                   <a
-                    href="tel:09833535960"
+                    href="tel:+15550000000"
                     className="font-bold text-[#0A0C0A] hover:text-[#6C8E68] tabular-nums transition-colors"
                   >
-                    09833535960
+                    +1 (555) 000-0000
                   </a>
                 </div>
               </div>
@@ -154,7 +154,7 @@ export const ReservationsSection: React.FC<ReservationsSectionProps> = ({
                   <source srcSet="/assets/sanctuary_map.webp" type="image/webp" />
                   <img
                     src="/assets/sanctuary_map.png"
-                    alt="Map location of LYS Salon & Spa Sanctuary at Janata Estate, Lower Parel"
+                    alt="Map location of Your Salon Name Sanctuary"
                     width={400}
                     height={200}
                     loading="lazy"
@@ -172,7 +172,7 @@ export const ReservationsSection: React.FC<ReservationsSectionProps> = ({
                     <div className="w-2.5 h-1 bg-black/30 rounded-full mx-auto blur-[1px]" />
                   </div>
                   <a
-                    href="https://maps.google.com/?q=8A+Janata+Estate+Senapati+Bapat+Marg+Lower+Parel+Mumbai"
+                    href="https://maps.google.com/?q=Your+Salon+Name+Location"
                     target="_blank"
                     rel="noreferrer"
                     className="pointer-events-auto px-4 py-1.5 rounded-full bg-white text-[10px] font-semibold tracking-wider text-[#0A0C0A] shadow-lg hover:bg-[#BFD8BB] uppercase border border-[#BFD8BB] transition-all hover:scale-105 active:scale-95"

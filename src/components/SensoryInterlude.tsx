@@ -336,7 +336,7 @@ export const SensoryInterlude: React.FC = () => {
 
         {/* Sensory Manifesto Caption */}
         <p className="font-sans text-xs sm:text-sm leading-relaxed text-[#6B7269] max-w-xl mx-auto mt-8 font-normal">
-          Immerse yourself in intentional tranquility. At LYS, every curve, light
+          Immerse yourself in intentional tranquility. In our atelier, every curve, light
           beam, and aromatic top note is curated for your inner calm.
         </p>
       </div>

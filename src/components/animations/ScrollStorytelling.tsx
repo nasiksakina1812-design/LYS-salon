@@ -128,7 +128,7 @@ export const ScrollStorytelling: React.FC<{ onOpenBooking?: () => void }> = ({
             </MaskedHeadingReveal>
           </h2>
           <p className="font-sans text-sm sm:text-base text-[#BFD8BB]/80 mt-4 leading-relaxed">
-            Every appointment at LYS is choreographed as an intentional transition
+            Every appointment at our salon is choreographed as an intentional transition
             from urban rush to absolute restorative stillness.
           </p>
         </div>

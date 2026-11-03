@@ -1,8 +1,7 @@
 /**
  * @license
  * SPDX-License-Identifier: Apache-2.0
- * 
- * LYS Salon & Spa - Animation Architecture Configuration
+ * Luxury Salon & Spa Template - Animation Architecture Configuration
  * Centralized settings for timing, easing curves, brand palettes, and feature flags.
  * Modify these parameters to calibrate motion aesthetics across the entire site.
  */

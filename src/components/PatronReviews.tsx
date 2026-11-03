@@ -10,42 +10,42 @@ import { MaskedHeadingReveal } from './animations/MaskedHeadingReveal';
 const reviewsData: ReviewItem[] = [
   {
     id: '1',
-    author: 'Ananya M.',
+    author: 'Sample Client A.',
     rating: 5,
-    date: '2 weeks ago',
+    date: 'Sample Date',
     serviceCategory: 'Artisan Colour & Balayage',
     comment:
-      'The aesthetic of this salon is unmatched in Lower Parel. It feels like an art gallery, but the stylists take so much time to understand hair texture. My balayage turned out so soft and effortless.',
+      'This is a sample client testimonial. Customize this quote to highlight your master colorists, personalized consultations, and natural balayage results.',
     verified: true,
   },
   {
     id: '2',
-    author: 'Rohan K.',
+    author: 'Sample Client B.',
     rating: 5,
-    date: '1 month ago',
+    date: 'Sample Date',
     serviceCategory: 'Sensory Spa & Head Spa',
     comment:
-      'Hands down the best head spa in South Mumbai. You step off Senapati Bapat Marg into total serene calm. The scalp therapy and massage relieve weeks of desk tension.',
+      'Sample review placeholder. Use this space to showcase your calming atmosphere, scalp therapy rituals, and restorative wellness experiences.',
     verified: true,
   },
   {
     id: '3',
-    author: 'Dr. Meera P.',
+    author: 'Sample Client C.',
     rating: 5,
-    date: '3 weeks ago',
+    date: 'Sample Date',
     serviceCategory: 'Hair Craft & Couture Cuts',
     comment:
-      'The 1-on-1 consultation here is genuinely unlike any typical salon. No rushing, no pushy upsells—just genuine care for strand health and face shape framing. Truly a sanctuary.',
+      'Editable client quote. Feature your precision styling, facial framing consultations, and friendly, welcoming salon team.',
     verified: true,
   },
   {
     id: '4',
-    author: 'Zoya K.',
+    author: 'Sample Client D.',
     rating: 5,
-    date: '2 months ago',
+    date: 'Sample Date',
     serviceCategory: 'Skin & Barrier Restoration',
     comment:
-      'The botanical facial sculpt gave my skin the most insane dewy glass finish without any redness. The complimentary hot botanical tea at the end is such a thoughtful ritual.',
+      'Sample feedback placeholder. Replace with genuine customer feedback from your Google Reviews, Yelp, Fresha, or booking platform.',
     verified: true,
   },
 ];
@@ -63,7 +63,7 @@ export const PatronReviews: React.FC = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start mb-16">
-          {/* Left Column: Verified Google Rating Card with 3D Tilt */}
+          {/* Left Column: Editable Rating Card with 3D Tilt */}
           <div className="lg:col-span-5">
             <TiltCard
               maxTilt={4}
@@ -78,12 +78,12 @@ export const PatronReviews: React.FC = () => {
               </div>
 
               <span className="text-[10px] font-semibold tracking-[0.24em] text-[#6B7269] uppercase mb-4">
-                VERIFIED GOOGLE RATING
+                SAMPLE RATING MODULE · EDITABLE
               </span>
 
               {/* Big Numerical Score */}
               <div className="font-serif text-5xl sm:text-6xl font-normal text-[#0A0C0A] tracking-tight mb-2">
-                4.9 <span className="text-3xl text-[#6B7269] font-light">/ 5</span>
+                5.0 <span className="text-3xl text-[#6B7269] font-light">/ 5</span>
               </div>
 
               {/* 5 Stars with Subtle Stagger Animation */}
@@ -97,22 +97,20 @@ export const PatronReviews: React.FC = () => {
               </div>
 
               <h3 className="font-serif text-lg font-medium text-[#0A0C0A] mb-3">
-                507 Verified Google Reviews
+                500+ Sample Client Reviews
               </h3>
 
               <p className="font-sans text-xs sm:text-sm text-[#6B7269] leading-relaxed max-w-xs mb-8">
-                Independent, unfiltered reviews from patrons celebrating
-                transformations at our Lower Parel retreat.
+                Sample rating and reviews placeholder. Easily connect your live
+                Google Reviews, Fresha, Vagaro, or Yelp profile.
               </p>
 
               <a
-                href="https://maps.google.com/?q=LYS+Salon+Spa+Lower+Parel+Janata+Estate"
-                target="_blank"
-                rel="noreferrer"
+                href="#reviews"
                 className="relative overflow-hidden inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#0A0C0A] text-white text-xs font-semibold tracking-[0.14em] uppercase hover:text-[#0A0C0A] transition-colors border border-[#0A0C0A] cursor-pointer"
               >
                 <span className="absolute inset-0 bg-[#BFD8BB] translate-y-full hover:translate-y-0 transition-transform duration-300 ease-out" />
-                <span className="relative z-10">READ ON GOOGLE MAPS</span>
+                <span className="relative z-10">CONNECT YOUR REVIEWS</span>
                 <ArrowUpRight className="relative z-10 w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </a>
             </TiltCard>
@@ -121,7 +119,7 @@ export const PatronReviews: React.FC = () => {
           {/* Right Column: Patron Testimonials List */}
           <div className="lg:col-span-7">
             <span className="block text-[11px] font-semibold tracking-[0.22em] text-[#6B7269] uppercase mb-3">
-              PATRON TESTIMONIALS
+              CLIENT TESTIMONIALS · SAMPLE TEMPLATE
             </span>
             <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal tracking-tight text-[#0A0C0A] mb-6">
               <MaskedHeadingReveal as="span" highlightWords={['experiences']}>
@@ -189,7 +187,7 @@ export const PatronReviews: React.FC = () => {
                 onClick={() => setShowAll(!showAll)}
                 className="text-xs font-semibold tracking-wider text-[#0A0C0A] hover:text-[#6C8E68] underline underline-offset-4 cursor-pointer transition-colors active:scale-95"
               >
-                {showAll ? 'Show Fewer Reviews' : 'View More Verified Patron Reviews (2 more)'}
+                {showAll ? 'Show Fewer Reviews' : 'View More Sample Reviews (2 more)'}
               </button>
             </div>
           </div>
@@ -199,7 +197,7 @@ export const PatronReviews: React.FC = () => {
         <div className="pt-10 border-t border-[#BFD8BB]/50">
           <div className="text-center mb-6">
             <span className="text-[10px] font-mono uppercase tracking-[0.22em] text-[#6B7269]">
-              LIVE COMMUNITY REFLECTIONS · HOVER TO PAUSE & READ
+              SAMPLE CLIENT REFLECTIONS · EDITABLE TEMPLATE COMPONENT
             </span>
           </div>
           <InfiniteTestimonialMarquee reviews={reviewsData} />

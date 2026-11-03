@@ -97,7 +97,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking }) => {
             className="flex items-baseline gap-2 group tracking-tight text-[#0A0C0A] whitespace-nowrap shrink-0 transition-transform duration-300 hover:scale-[1.02]"
           >
             <span className="font-serif text-2xl lg:text-3xl font-medium tracking-tight text-[#0A0C0A]">
-              LYS
+              YOUR SALON
             </span>
             <span className="text-[10px] tracking-[0.22em] font-semibold text-[#6B7269] uppercase hidden sm:inline-block">
               SALON & SPA
@@ -136,11 +136,11 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking }) => {
           {/* Zone 3: Direct Desk & Booking Action */}
           <div className="flex items-center gap-3 sm:gap-4 shrink-0">
             <a
-              href="tel:09833535960"
+              href="tel:+15550000000"
               className="hidden md:flex items-center gap-1.5 text-xs font-semibold tracking-wide text-[#0A0C0A] hover:text-[#6C8E68] transition-all px-3.5 py-1.5 rounded-full hover:bg-[#E7F1E5] active:scale-95"
             >
               <Phone className="w-3.5 h-3.5 text-[#6C8E68]" />
-              <span>09833535960</span>
+              <span>+1 (555) 000-0000</span>
             </a>
 
             <MagneticButton
@@ -191,11 +191,11 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking }) => {
 
             <div className="flex flex-col gap-3 pt-6 border-t border-[#BFD8BB]/40 text-center">
               <a
-                href="tel:09833535960"
+                href="tel:+15550000000"
                 className="text-sm font-semibold tracking-wider text-[#0A0C0A] flex items-center justify-center gap-2 py-2"
               >
                 <Phone className="w-4 h-4 text-[#6C8E68]" />
-                09833535960
+                +1 (555) 000-0000
               </a>
               <button
                 onClick={() => {

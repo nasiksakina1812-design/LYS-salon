@@ -52,7 +52,7 @@ export const PhilosophyBanner: React.FC = () => {
       <div className="relative max-w-5xl mx-auto px-4 sm:px-8 text-center z-10">
         {/* Eyebrow */}
         <p className="text-[11px] font-semibold tracking-[0.25em] text-[#BFD8BB] uppercase mb-4">
-          THE PHILOSOPHY · LYS
+          THE PHILOSOPHY · YOUR SALON NAME
         </p>
 
         {/* Display Headline with Staggered Word Reveals */}
@@ -61,7 +61,7 @@ export const PhilosophyBanner: React.FC = () => {
         </h2>
         <div className="font-serif text-3xl sm:text-4xl lg:text-5xl italic font-normal text-[#BFD8BB] mb-8">
           <TextReveal as="span" delay={0.2}>
-            love your soul.
+            elevate your essence.
           </TextReveal>
         </div>
 

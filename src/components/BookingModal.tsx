@@ -20,7 +20,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
     preselectedService?.name || 'Architectural Strand Sculpting'
   );
   const [selectedPrice, setSelectedPrice] = useState<string>(
-    preselectedService?.price || '₹ 2,800+'
+    preselectedService?.price || '$ 85+'
   );
   const [selectedDuration, setSelectedDuration] = useState<string>(
     preselectedService?.duration || '60 min'
@@ -175,13 +175,13 @@ export const BookingModal: React.FC<BookingModalProps> = ({
               <Check className="w-8 h-8 text-[#6C8E68]" />
             </div>
             <span className="text-[10px] font-semibold tracking-[0.2em] text-[#6C8E68] uppercase font-bold">
-              CONFIRMATION NO. #LYS-8492
+              CONFIRMATION NO. #YSN-8492
             </span>
             <h4 className="font-serif text-3xl font-normal text-[#0A0C0A] mt-2 mb-3">
               Your ritual is reserved.
             </h4>
             <p className="font-sans text-sm text-[#6B7269] max-w-md mx-auto mb-8 leading-relaxed">
-              We look forward to welcoming you to our Lower Parel sanctuary on{' '}
+              We look forward to welcoming you to our sanctuary atelier on{' '}
               <strong className="text-[#0A0C0A] font-semibold">{selectedDate}</strong> at{' '}
               <strong className="text-[#0A0C0A] font-semibold">{selectedTime}</strong> for{' '}
               <strong className="text-[#0A0C0A] font-semibold">{selectedService}</strong>.
@@ -202,7 +202,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
               </div>
               <div className="flex justify-between">
                 <span className="text-[#6B7269]">Desk Contact</span>
-                <span className="font-bold text-[#0A0C0A]">09833535960</span>
+                <span className="font-bold text-[#0A0C0A]">+1 (555) 000-0000</span>
               </div>
             </div>
 
@@ -412,7 +412,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                 <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
               </button>
               <p className="text-center text-[10px] text-[#6B7269] mt-3">
-                No advance deposit required. Direct confirmation sent via WhatsApp.
+                No advance deposit required. Direct confirmation sent via SMS or email.
               </p>
             </div>
           </form>

@@ -7,6 +7,7 @@ import React, { useEffect } from 'react';
 export const ScissorCursor: React.FC = () => {
   useEffect(() => {
     document.body.classList.remove('custom-scissor-cursor');
+    document.documentElement.classList.remove('has-custom-cursor');
   }, []);
 
   return null;

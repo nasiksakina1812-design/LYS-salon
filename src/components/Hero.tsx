@@ -31,7 +31,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
               className="inline-flex items-center gap-2 mb-6 text-[11px] font-semibold tracking-[0.22em] text-[#0A0C0A] uppercase"
             >
               <span className="w-2.5 h-2.5 rounded-full bg-[#BFD8BB] border border-[#6C8E68] shadow-xs animate-pulse" />
-              <span>LYS SALON & SPA · LOWER PAREL, MUMBAI</span>
+              <span>YOUR SALON NAME · YOUR LOCATION</span>
             </motion.div>
 
             {/* Display Headline with Masked Character/Word Reveal & Variable-Font Hover Weight Shift */}
@@ -105,9 +105,9 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
                     <Star key={i} className="w-3.5 h-3.5 fill-[#0A0C0A]" />
                   ))}
                 </div>
-                <span className="font-bold text-[#0A0C0A] tabular-nums">4.9 / 5</span>
+                <span className="font-bold text-[#0A0C0A] tabular-nums">5.0 / 5</span>
                 <span className="text-[#BFD8BB]">·</span>
-                <span className="tracking-wide text-[#0A0C0A]">507 GOOGLE REVIEWS</span>
+                <span className="tracking-wide text-[#0A0C0A]">SAMPLE RATING · 500+ REVIEWS</span>
               </div>
 
               <a
@@ -164,7 +164,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
                     src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format,compress&fit=crop&w=860&q=80&fm=webp"
                     srcSet="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format,compress&fit=crop&w=430&q=80&fm=webp 430w, https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format,compress&fit=crop&w=860&q=80&fm=webp 860w"
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 430px"
-                    alt="Radiant client portrait at LYS Salon & Spa"
+                    alt="Radiant client portrait at Your Salon Name"
                     width={430}
                     height={580}
                     priority={true}
@@ -183,7 +183,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
                 >
                   <MapPin className="w-3 h-3 text-[#6C8E68]" />
                   <span className="text-[10px] font-semibold tracking-[0.14em] text-[#0A0C0A] uppercase">
-                    LOWER PAREL ATELIER
+                    ATELIER · YOUR LOCATION
                   </span>
                 </motion.div>
 

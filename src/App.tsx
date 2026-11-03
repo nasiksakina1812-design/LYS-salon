@@ -62,7 +62,7 @@ export default function App() {
     setSelectedService({
       id: 'quick-select',
       name: serviceName,
-      price: serviceName.includes('Sculpting') ? '₹ 2,800+' : '₹ 3,400+',
+      price: serviceName.includes('Sculpting') ? '$ 85+' : '$ 110+',
       duration: serviceName.includes('Sculpting') ? '60 - 90 min' : '75 min',
       category: 'Curated Ritual',
     });

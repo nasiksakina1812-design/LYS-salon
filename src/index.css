@@ -4,15 +4,15 @@
   --font-serif: "Playfair Display", Georgia, serif;
   --font-sans: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   
-  --color-lys-white: #FFFFFF;
-  --color-lys-canvas-subtle: #F6F9F5;
-  --color-lys-black: #0A0C0A;
-  --color-lys-black-soft: #141714;
-  --color-lys-pastel: #BFD8BB;
-  --color-lys-pastel-light: #E7F1E5;
-  --color-lys-pastel-dark: #6C8E68;
-  --color-lys-muted: #6B7269;
-  --color-lys-border: #DCE8DA;
+  --color-salon-white: #FFFFFF;
+  --color-salon-canvas-subtle: #F6F9F5;
+  --color-salon-black: #0A0C0A;
+  --color-salon-black-soft: #141714;
+  --color-salon-pastel: #BFD8BB;
+  --color-salon-pastel-light: #E7F1E5;
+  --color-salon-pastel-dark: #6C8E68;
+  --color-salon-muted: #6B7269;
+  --color-salon-border: #DCE8DA;
 }
 
 html {

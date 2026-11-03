@@ -61,7 +61,7 @@ export const SpaceArchitecture: React.FC<SpaceArchitectureProps> = ({
             transition={{ duration: 0.8, delay: 0.15, ease: LUXURY_EASE }}
             className="font-sans text-sm sm:text-base leading-relaxed text-[#6B7269]"
           >
-            A calm sanctuary situated above the historic pulse of Lower Parel.
+            A calm sanctuary situated above the bustling rhythm of your city.
             Thoughtfully realized with fluted lime plaster, arched illuminated
             mirrors, warm terrazzo, and tactile sage velvet.
           </motion.p>
@@ -76,7 +76,7 @@ export const SpaceArchitecture: React.FC<SpaceArchitectureProps> = ({
                 src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format,compress&fit=crop&w=1000&q=80&fm=webp"
                 srcSet="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format,compress&fit=crop&w=600&q=80&fm=webp 600w, https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format,compress&fit=crop&w=1000&q=80&fm=webp 1000w"
                 sizes="(max-width: 1024px) 100vw, 700px"
-                alt="Styling Atelier at LYS Salon Lower Parel"
+                alt="Styling Atelier at Your Salon Name"
                 width={700}
                 height={450}
                 loading="lazy"
@@ -166,7 +166,7 @@ export const SpaceArchitecture: React.FC<SpaceArchitectureProps> = ({
                   src="https://images.unsplash.com/photo-1608248597359-57e0e7a256a2?auto=format,compress&fit=crop&w=800&q=80&fm=webp"
                   srcSet="https://images.unsplash.com/photo-1608248597359-57e0e7a256a2?auto=format,compress&fit=crop&w=400&q=80&fm=webp 400w, https://images.unsplash.com/photo-1608248597359-57e0e7a256a2?auto=format,compress&fit=crop&w=800&q=80&fm=webp 800w"
                   sizes="(max-width: 1024px) 100vw, 500px"
-                  alt="Aromatherapy Bar at LYS"
+                  alt="Aromatherapy Bar at Your Salon Name"
                   width={500}
                   height={320}
                   loading="lazy"
@@ -191,12 +191,12 @@ export const SpaceArchitecture: React.FC<SpaceArchitectureProps> = ({
                   LOCATION SIGNATURE
                 </span>
                 <h3 className="font-serif text-xl sm:text-2xl font-normal text-[#0A0C0A] mb-4">
-                  Janata Estate, Senapati Bapat Marg
+                  123 Atelier Boulevard, Suite 100
                 </h3>
                 <p className="font-sans text-xs sm:text-sm leading-relaxed text-[#6B7269] mb-6">
-                  Elevated comfortably on the first floor above Spice Klub,
-                  offering a peaceful respite from Mumbai’s bustling financial
-                  and fashion district.
+                  Nestled gracefully in the heart of your city's design district,
+                  offering a peaceful respite from urban life with private styling
+                  suites and restorative acoustics.
                 </p>
               </div>
 

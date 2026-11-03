@@ -66,7 +66,7 @@ export const BrandLoader: React.FC<BrandLoaderProps> = ({ onComplete }) => {
               transition={{ duration: 0.6, delay: 0.15 }}
               className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#BFD8BB] mb-4"
             >
-              URBAN SANCTUARY · LOWER PAREL
+              URBAN SANCTUARY · YOUR LOCATION
             </motion.div>
 
             {/* Brand Title Masked Reveal */}
@@ -81,7 +81,7 @@ export const BrandLoader: React.FC<BrandLoaderProps> = ({ onComplete }) => {
                 }}
                 className="font-serif text-4xl sm:text-5xl font-normal tracking-wider text-white"
               >
-                LYS SALON & SPA
+                YOUR SALON NAME
               </motion.h1>
             </div>
 

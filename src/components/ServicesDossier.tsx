@@ -19,7 +19,7 @@ const serviceCategories: ServiceCategory[] = [
       {
         id: 'hair-1',
         name: 'Signature Restyling & Finish',
-        price: '₹ 2,800+',
+        price: '$ 85+',
         duration: '60 min',
         category: 'Hair Craft & Couture Cuts',
         description: 'Complete aesthetic consultation, precision shape tailoring, and signature blowout.',
@@ -28,7 +28,7 @@ const serviceCategories: ServiceCategory[] = [
       {
         id: 'hair-2',
         name: 'Botanical Scalp Detox Cut',
-        price: '₹ 3,400+',
+        price: '$ 110+',
         duration: '75 min',
         category: 'Hair Craft & Couture Cuts',
         description: 'Deep micro-follicle clarifying wash, hair trim, and essential oil scalp rinse.',
@@ -37,7 +37,7 @@ const serviceCategories: ServiceCategory[] = [
       {
         id: 'hair-3',
         name: 'Deep Reconstruction Treatment',
-        price: '₹ 4,500+',
+        price: '$ 140+',
         duration: '90 min',
         category: 'Hair Craft & Couture Cuts',
         description: 'Amino peptide rebuilding mask with steam activation for porous, sensitized strands.',
@@ -46,7 +46,7 @@ const serviceCategories: ServiceCategory[] = [
       {
         id: 'hair-4',
         name: 'Editorial Blowdry & Wave',
-        price: '₹ 1,800+',
+        price: '$ 65+',
         duration: '45 min',
         category: 'Hair Craft & Couture Cuts',
         description: 'Effortless Parisian textured movement with thermal barrier botanical shield.',
@@ -63,7 +63,7 @@ const serviceCategories: ServiceCategory[] = [
       {
         id: 'colour-1',
         name: 'Dimensional Balayage & Glaze',
-        price: '₹ 6,200+',
+        price: '$ 180+',
         duration: '150 min',
         category: 'Artisan Colour & Balayage',
         description: 'Custom freehand placement that replicates natural sunlit depth, followed by peptide toner.',
@@ -72,7 +72,7 @@ const serviceCategories: ServiceCategory[] = [
       {
         id: 'colour-2',
         name: 'French Gloss & Tone Refinement',
-        price: '₹ 3,200+',
+        price: '$ 95+',
         duration: '60 min',
         category: 'Artisan Colour & Balayage',
         description: 'Acidic pH gloss formulation to neutralize brassiness and seal the hair cuticle with mirror shine.',
@@ -81,7 +81,7 @@ const serviceCategories: ServiceCategory[] = [
       {
         id: 'colour-3',
         name: 'Organic Root Melt & Lightening',
-        price: '₹ 4,800+',
+        price: '$ 140+',
         duration: '90 min',
         category: 'Artisan Colour & Balayage',
         description: 'Seamless low-maintenance regrowth transition formulated with organic botanical pigments.',
@@ -98,7 +98,7 @@ const serviceCategories: ServiceCategory[] = [
       {
         id: 'style-1',
         name: 'Red Carpet & Editorial Updo',
-        price: '₹ 3,500+',
+        price: '$ 110+',
         duration: '75 min',
         category: 'Editorial Styling & Occasion',
         description: 'Architectural structural silhouettes or soft romantic sculpted buns for gala evenings.',
@@ -107,7 +107,7 @@ const serviceCategories: ServiceCategory[] = [
       {
         id: 'style-2',
         name: 'Textural Parisian Wave',
-        price: '₹ 2,200+',
+        price: '$ 70+',
         duration: '50 min',
         category: 'Editorial Styling & Occasion',
         description: 'Carefree, lived-in bend with matte botanical sea-mineral texture.',
@@ -116,7 +116,7 @@ const serviceCategories: ServiceCategory[] = [
       {
         id: 'style-3',
         name: 'Atelier Bridal Preview Session',
-        price: '₹ 5,000+',
+        price: '$ 160+',
         duration: '120 min',
         category: 'Editorial Styling & Occasion',
         description: 'Comprehensive styling trial with veil placement and dupatta drape harmonization.',
@@ -133,7 +133,7 @@ const serviceCategories: ServiceCategory[] = [
       {
         id: 'skin-1',
         name: 'Botanical Lymphatic Facial Sculpt',
-        price: '₹ 4,800+',
+        price: '$ 140+',
         duration: '75 min',
         category: 'Skin & Barrier Restoration',
         description: 'Manual gua sha drainage combined with cold-pressed rosehip seed extract to contour jawline.',
@@ -142,7 +142,7 @@ const serviceCategories: ServiceCategory[] = [
       {
         id: 'skin-2',
         name: 'Cellular Hydration & Oxygen Drench',
-        price: '₹ 5,200+',
+        price: '$ 160+',
         duration: '80 min',
         category: 'Skin & Barrier Restoration',
         description: 'Hyperbaric pressurized botanical serum delivery deep into cellular matrix for glass-skin glow.',
@@ -151,7 +151,7 @@ const serviceCategories: ServiceCategory[] = [
       {
         id: 'skin-3',
         name: 'Marine Algae Calming Mask Ritual',
-        price: '₹ 3,900+',
+        price: '$ 120+',
         duration: '60 min',
         category: 'Skin & Barrier Restoration',
         description: 'Soothes inflammation, redness, and environmental barrier damage caused by urban pollution.',
@@ -168,7 +168,7 @@ const serviceCategories: ServiceCategory[] = [
       {
         id: 'spa-1',
         name: 'Japanese Shiatsu Head Spa & Steam',
-        price: '₹ 4,200+',
+        price: '$ 130+',
         duration: '75 min',
         category: 'Sensory Spa & Wellness Rituals',
         description: 'Continuous warm herbal waterfall bath, acupressure scalp stimulation, and herbal head mist.',
@@ -177,7 +177,7 @@ const serviceCategories: ServiceCategory[] = [
       {
         id: 'spa-2',
         name: 'Aromatic Botanical Scalp Polish',
-        price: '₹ 3,100+',
+        price: '$ 95+',
         duration: '60 min',
         category: 'Sensory Spa & Wellness Rituals',
         description: 'Gentle Himalayan pink salt scrub blended with jojoba oil to lift buildup and restore follicular health.',
@@ -186,7 +186,7 @@ const serviceCategories: ServiceCategory[] = [
       {
         id: 'spa-3',
         name: 'Tension Melt Neck & Shoulder Flow',
-        price: '₹ 2,400+',
+        price: '$ 75+',
         duration: '45 min',
         category: 'Sensory Spa & Wellness Rituals',
         description: 'Targeted acupressure release designed specifically for professionals carrying screen tension.',
