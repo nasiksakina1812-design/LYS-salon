@@ -202,7 +202,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
               </div>
               <div className="flex justify-between">
                 <span className="text-[#6B7269]">Desk Contact</span>
-                <span className="font-bold text-[#0A0C0A]">+1 (555) 000-0000</span>
+                <span className="font-bold text-[#0A0C0A]">+91 (555) 000-0000</span>
               </div>
             </div>
 

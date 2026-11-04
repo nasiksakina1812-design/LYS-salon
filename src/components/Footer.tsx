@@ -45,10 +45,10 @@ export const Footer: React.FC = () => {
               <div className="text-[#6B7269]">
                 Concierge:{' '}
                 <a
-                  href="tel:+15550000000"
+                  href="tel:+915550000000"
                   className="font-semibold text-[#0A0C0A] hover:text-[#6C8E68]"
                 >
-                  +1 (555) 000-0000
+                  +91 (555) 000-0000
                 </a>
               </div>
               <div className="text-[#6B7269]">
@@ -146,7 +146,7 @@ export const Footer: React.FC = () => {
             </span>
             <span>·</span>
             <a
-              href="tel:+15550000000"
+              href="tel:+915550000000"
               className="hover:text-[#0A0C0A] transition-colors"
             >
               Concierge Desk

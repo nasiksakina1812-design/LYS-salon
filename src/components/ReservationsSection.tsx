@@ -72,11 +72,11 @@ export const ReservationsSection: React.FC<ReservationsSectionProps> = ({
               className="flex flex-wrap items-center gap-4"
             >
               <a
-                href="tel:+15550000000"
+                href="tel:+915550000000"
                 className="relative overflow-hidden inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full bg-white text-[#0A0C0A] text-xs font-semibold tracking-[0.14em] uppercase hover:bg-[#BFD8BB] transition-all duration-300 shadow-md active:scale-[0.98] group"
               >
                 <Phone className="w-3.5 h-3.5 text-[#0A0C0A] transition-transform duration-300 group-hover:rotate-12" />
-                <span>CALL TO BOOK: +1 (555) 000-0000</span>
+                <span>CALL TO BOOK: +91 (555) 000-0000</span>
               </a>
 
               <a
@@ -140,10 +140,10 @@ export const ReservationsSection: React.FC<ReservationsSectionProps> = ({
                 <div className="flex items-center justify-between font-sans pt-1.5 border-t border-[#BFD8BB]/40">
                   <span className="text-[#6B7269]">Direct Desk</span>
                   <a
-                    href="tel:+15550000000"
+                    href="tel:+915550000000"
                     className="font-bold text-[#0A0C0A] hover:text-[#6C8E68] tabular-nums transition-colors"
                   >
-                    +1 (555) 000-0000
+                    +91 (555) 000-0000
                   </a>
                 </div>
               </div>
