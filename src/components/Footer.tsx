@@ -89,6 +89,11 @@ export const Footer: React.FC = () => {
                 </a>
               </li>
               <li>
+                <a href="#founder" className="hover:text-[#6C8E68] transition-colors">
+                  The Founder
+                </a>
+              </li>
+              <li>
                 <a href="#space" className="hover:text-[#6C8E68] transition-colors">
                   Our Space
                 </a>

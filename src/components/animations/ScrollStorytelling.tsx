@@ -122,7 +122,7 @@ export const ScrollStorytelling: React.FC<{ onOpenBooking?: () => void }> = ({
             <MaskedHeadingReveal
               as="span"
               className="text-white"
-              highlightWords={['Transformation', 'Ritual']}
+              highlightWords={['sensory', 'journey']}
             >
               From consultation to reveal: A continuous sensory journey.
             </MaskedHeadingReveal>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, Sparkles } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { motion, useReducedMotion } from 'motion/react';
 import { SmartImage } from './SmartImage';
 import {
@@ -10,7 +10,6 @@ import {
 } from './animations/MotionPrimitives';
 import { FannedCardStack } from './animations/FannedCardStack';
 import { MaskedHeadingReveal } from './animations/MaskedHeadingReveal';
-import { ScissorSlider } from './animations/ScissorSlider';
 
 interface CuratedJourneyProps {
   onSelectService: (serviceName: string) => void;
@@ -33,8 +32,8 @@ export const CuratedJourney: React.FC<CuratedJourneyProps> = ({
               A CURATED JOURNEY
             </span>
             <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal tracking-tight text-[#0A0C0A] text-balance">
-              <MaskedHeadingReveal as="span" highlightWords={['transformation']}>
-                Your moment. Your transformation.
+              <MaskedHeadingReveal as="span" highlightWords={['sanctuary', 'ritual']}>
+                Your moment. Your signature sanctuary.
               </MaskedHeadingReveal>
             </h2>
           </div>
@@ -207,30 +206,6 @@ export const CuratedJourney: React.FC<CuratedJourneyProps> = ({
             </div>
           </TiltCard>
         </FannedCardStack>
-
-        {/* Before / After Transformation Scissor Slider Showcase */}
-        <div className="mt-20 pt-16 border-t border-[#BFD8BB]/60">
-          <div className="max-w-3xl mb-8">
-            <div className="inline-flex items-center gap-2 mb-2 text-[10px] font-semibold tracking-[0.22em] text-[#6C8E68] uppercase">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>THE ART OF THE CUT · PRECISION TRANSFORMATION</span>
-            </div>
-            <h3 className="font-serif text-2xl sm:text-3xl text-[#0A0C0A] font-normal">
-              Drag shears to reveal structural transformation.
-            </h3>
-            <p className="font-sans text-xs sm:text-sm text-[#6B7269] mt-2">
-              Witness how custom weight removal and tailored perimeter contouring
-              revitalize sensitized, heavy strands into buoyant, weightless movement.
-            </p>
-          </div>
-
-          <ScissorSlider
-            beforeImage="https://images.unsplash.com/photo-1580618672591-eb180b1a973f?auto=format,compress&fit=crop&w=1200&q=80&fm=webp"
-            afterImage="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format,compress&fit=crop&w=1200&q=80&fm=webp"
-            beforeLabel="UNTREATED / DENSE PERIMETER"
-            afterLabel="SCULPTED / ARCHITECTURAL FINISH"
-          />
-        </div>
       </div>
     </section>
   );

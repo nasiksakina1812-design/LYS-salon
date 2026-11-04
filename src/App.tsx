@@ -9,7 +9,7 @@ import { Hero } from './components/Hero';
 import { PhilosophyBanner } from './components/PhilosophyBanner';
 import { CuratedJourney } from './components/CuratedJourney';
 import { ServicesDossier } from './components/ServicesDossier';
-import { SensoryInterlude } from './components/SensoryInterlude';
+import { FounderSection } from './components/FounderSection';
 import { SpaceArchitecture } from './components/SpaceArchitecture';
 import { PatronReviews } from './components/PatronReviews';
 import { ReservationsSection } from './components/ReservationsSection';
@@ -134,8 +134,8 @@ export default function App() {
             onOpenBooking={handleOpenBooking}
           />
 
-          {/* Sensory Interlude: Interactive Fluid Touch Canvas */}
-          <SensoryInterlude />
+          {/* Founder & Creative Director Section */}
+          <FounderSection onOpenBooking={handleOpenBooking} />
 
           {/* Space & Architecture Section */}
           <SpaceArchitecture onOpenSpaceViewer={handleOpenSpaceViewer} />
