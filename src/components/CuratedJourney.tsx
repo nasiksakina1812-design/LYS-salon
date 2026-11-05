@@ -113,17 +113,17 @@ export const CuratedJourney: React.FC<CuratedJourneyProps> = ({
               <CurvedImageReveal shape="circle" delay={0.2}>
                 <div className="relative rounded-xl overflow-hidden aspect-[4/5] bg-[#E7F1E5]">
                   <SmartImage
-                    src="https://images.unsplash.com/photo-1608248597359-57e0e7a256a2?auto=format,compress&fit=crop&w=760&q=80&fm=webp"
-                    srcSet="https://images.unsplash.com/photo-1608248597359-57e0e7a256a2?auto=format,compress&fit=crop&w=380&q=80&fm=webp 380w, https://images.unsplash.com/photo-1608248597359-57e0e7a256a2?auto=format,compress&fit=crop&w=760&q=80&fm=webp 760w"
+                    src="https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format,compress&fit=crop&w=760&q=80&fm=webp"
+                    srcSet="https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format,compress&fit=crop&w=380&q=80&fm=webp 380w, https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format,compress&fit=crop&w=760&q=80&fm=webp 760w"
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 380px"
-                    alt="Botanical head spa infusion preparation"
+                    alt="Botanical head spa hair wash and scalp infusion in salon ceramic basin"
                     width={400}
                     height={500}
                     loading="lazy"
                     decoding="async"
                     className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-108"
-                    fallbackTitle="Botanical Herbal Oils"
-                    fallbackSubtitle="Clean cold-pressed extracts for deep scalp therapy"
+                    fallbackTitle="Botanical Scalp Therapy"
+                    fallbackSubtitle="Gentle herbal rinse and scalp infusion at our backwash basin"
                   />
                   <div className="absolute bottom-3 left-3 z-10 px-3 py-1 rounded-full bg-[#0A0C0A] text-[9px] font-semibold tracking-[0.2em] text-white uppercase shadow-xs transition-transform duration-300 group-hover:scale-105">
                     HERBAL ELIXIR

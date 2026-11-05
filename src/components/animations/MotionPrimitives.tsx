@@ -143,32 +143,32 @@ export const CurvedImageReveal: React.FC<CurvedImageRevealProps> = ({
   children,
   className = '',
   shape = 'circle',
-  delay = 0.15,
+  delay = 0.1,
 }) => {
   const shouldReduceMotion = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: '-40px' });
+  const isInView = useInView(ref, { once: true, margin: '200px 0px 200px 0px' });
 
   if (shouldReduceMotion) {
     return <div className={className}>{children}</div>;
   }
 
-  // Predefined luxury curved mask paths
+  // Predefined luxury curved mask paths that ensure content is always visible
   const getClipPath = (isRevealed: boolean) => {
     if (shape === 'circle') {
       return isRevealed
         ? 'circle(150% at 50% 50%)'
-        : 'circle(0% at 50% 50%)';
+        : 'circle(95% at 50% 50%)';
     }
     if (shape === 'arch') {
       return isRevealed
         ? 'inset(0% 0% 0% 0% round 180px 180px 24px 24px)'
-        : 'inset(100% 0% 0% 0% round 180px 180px 24px 24px)';
+        : 'inset(0% 0% 0% 0% round 120px 120px 24px 24px)';
     }
     // oval
     return isRevealed
       ? 'ellipse(140% 140% at 50% 50%)'
-      : 'ellipse(0% 0% at 50% 50%)';
+      : 'ellipse(95% 95% at 50% 50%)';
   };
 
   return (
@@ -178,7 +178,7 @@ export const CurvedImageReveal: React.FC<CurvedImageRevealProps> = ({
       initial={{
         clipPath: getClipPath(false),
         opacity: 0.85,
-        scale: 1.04,
+        scale: 1.02,
       }}
       animate={
         isInView
@@ -189,12 +189,12 @@ export const CurvedImageReveal: React.FC<CurvedImageRevealProps> = ({
             }
           : {
               clipPath: getClipPath(false),
-              opacity: 0.85,
-              scale: 1.04,
+              opacity: 0.9,
+              scale: 1.01,
             }
       }
       transition={{
-        duration: 1.1,
+        duration: 0.9,
         delay,
         ease: LUXURY_EASE,
       }}

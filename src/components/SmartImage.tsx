@@ -74,7 +74,7 @@ export const SmartImage: React.FC<SmartImageProps> = ({
 
   return (
     <div
-      className={`relative overflow-hidden ${containerClassName}`}
+      className={`relative overflow-hidden w-full h-full ${containerClassName}`}
       style={width && height ? { aspectRatio: `${width} / ${height}` } : undefined}
     >
       {!loaded && !priority && (

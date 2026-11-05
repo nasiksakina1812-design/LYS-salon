@@ -10,7 +10,6 @@ import { PhilosophyBanner } from './components/PhilosophyBanner';
 import { CuratedJourney } from './components/CuratedJourney';
 import { ServicesDossier } from './components/ServicesDossier';
 import { FounderSection } from './components/FounderSection';
-import { SpaceArchitecture } from './components/SpaceArchitecture';
 import { PatronReviews } from './components/PatronReviews';
 import { ReservationsSection } from './components/ReservationsSection';
 import { Footer } from './components/Footer';
@@ -136,9 +135,6 @@ export default function App() {
 
           {/* Founder & Creative Director Section */}
           <FounderSection onOpenBooking={handleOpenBooking} />
-
-          {/* Space & Architecture Section */}
-          <SpaceArchitecture onOpenSpaceViewer={handleOpenSpaceViewer} />
 
           {/* 11. PATRON REVIEWS with Floating Sparkles & Infinite Marquee that slows on hover */}
           <PatronReviews />

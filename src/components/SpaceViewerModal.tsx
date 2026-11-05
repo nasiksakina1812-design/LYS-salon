@@ -27,16 +27,37 @@ export const SpaceViewerModal: React.FC<SpaceViewerModalProps> = ({
     {
       title: 'Head Spa & Hydrotherapy Sanctuary',
       eyebrow: 'ZONE 02 · ACOUSTIC ISOLATION',
-      image: 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format,compress&fit=crop&w=1000&q=80&fm=webp',
+      image: 'https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format,compress&fit=crop&w=1000&q=80&fm=webp',
       materials: ['Acoustic Felt Baffles', 'Charcoal Ceramic Basins', 'Gentle Waterfall Dispensers'],
       desc: 'Complete sensory decompression with dimmed ambient floor illumination, acoustic isolation from city sounds, and warm botanical steam mists.',
     },
     {
       title: 'Botanical Aromatherapy Dispensary',
       eyebrow: 'ZONE 03 · HERBAL APOTHECARY',
-      image: 'https://images.unsplash.com/photo-1608248597359-57e0e7a256a2?auto=format,compress&fit=crop&w=1000&q=80&fm=webp',
+      image: 'https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?auto=format,compress&fit=crop&w=1000&q=80&fm=webp',
       materials: ['Hand-Carved Soapstone', 'Amber Apothecary Glass', 'Fresh Organic Botanical Extracts'],
       desc: 'Where every custom essential oil elixir is blended fresh prior to your session, paired with artisanal hot herbal tea.',
+    },
+    {
+      title: 'Private VIP Styling Suite',
+      eyebrow: 'ZONE 04 · PRIVATE RETREAT',
+      image: 'https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?auto=format,compress&fit=crop&w=1000&q=80&fm=webp',
+      materials: ['Sound-Damping Oak Slats', 'Plush Ergonomic Loungers', 'Private Beverage Bar'],
+      desc: 'An exclusive sanctuary created for high-touch personal consultations, quiet sessions, and bespoke bridal or celebratory styling.',
+    },
+    {
+      title: 'Color Formulation Laboratory',
+      eyebrow: 'ZONE 05 · COLOR & BALAYAGE STUDIO',
+      image: 'https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?auto=format,compress&fit=crop&w=1000&q=80&fm=webp',
+      materials: ['Stainless Precision Scales', 'Custom Pigment Racks', 'Full-Spectrum Calibration Rings'],
+      desc: 'Where senior master colorists blend low-ammonia conditioning tints, organic plant glosses, and micro-refined lightening agents.',
+    },
+    {
+      title: 'Sensory Lounge & Tea Courtyard',
+      eyebrow: 'ZONE 06 · RESTORATIVE RETREAT',
+      image: 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format,compress&fit=crop&w=1000&q=80&fm=webp',
+      materials: ['Warm Terrazzo Benches', 'Tactile Sage Velvet', 'Live Botanical Planters'],
+      desc: 'An unhurried space before and after treatments to enjoy cold-pressed herbal teas, calming aromatherapy, and sensory unwinding.',
     },
   ];
 
