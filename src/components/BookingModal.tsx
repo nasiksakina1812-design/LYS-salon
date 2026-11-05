@@ -20,7 +20,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
     preselectedService?.name || 'Architectural Strand Sculpting'
   );
   const [selectedPrice, setSelectedPrice] = useState<string>(
-    preselectedService?.price || '$ 85+'
+    preselectedService?.price || '₹ 3,500+'
   );
   const [selectedDuration, setSelectedDuration] = useState<string>(
     preselectedService?.duration || '60 min'

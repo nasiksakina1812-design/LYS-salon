@@ -19,7 +19,7 @@ const serviceCategories: ServiceCategory[] = [
       {
         id: 'hair-1',
         name: 'Signature Restyling & Finish',
-        price: '$ 85+',
+        price: '₹ 3,500+',
         duration: '60 min',
         category: 'Hair Craft & Couture Cuts',
         description: 'Complete aesthetic consultation, precision shape tailoring, and signature blowout.',
@@ -28,7 +28,7 @@ const serviceCategories: ServiceCategory[] = [
       {
         id: 'hair-2',
         name: 'Botanical Scalp Detox Cut',
-        price: '$ 110+',
+        price: '₹ 4,500+',
         duration: '75 min',
         category: 'Hair Craft & Couture Cuts',
         description: 'Deep micro-follicle clarifying wash, hair trim, and essential oil scalp rinse.',
@@ -37,7 +37,7 @@ const serviceCategories: ServiceCategory[] = [
       {
         id: 'hair-3',
         name: 'Deep Reconstruction Treatment',
-        price: '$ 140+',
+        price: '₹ 5,800+',
         duration: '90 min',
         category: 'Hair Craft & Couture Cuts',
         description: 'Amino peptide rebuilding mask with steam activation for porous, sensitized strands.',
@@ -46,7 +46,7 @@ const serviceCategories: ServiceCategory[] = [
       {
         id: 'hair-4',
         name: 'Editorial Blowdry & Wave',
-        price: '$ 65+',
+        price: '₹ 2,500+',
         duration: '45 min',
         category: 'Hair Craft & Couture Cuts',
         description: 'Effortless Parisian textured movement with thermal barrier botanical shield.',
