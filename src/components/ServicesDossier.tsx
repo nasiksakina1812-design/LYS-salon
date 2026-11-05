@@ -63,7 +63,7 @@ const serviceCategories: ServiceCategory[] = [
       {
         id: 'colour-1',
         name: 'Dimensional Balayage & Glaze',
-        price: '$ 180+',
+        price: '₹ 8,500+',
         duration: '150 min',
         category: 'Artisan Colour & Balayage',
         description: 'Custom freehand placement that replicates natural sunlit depth, followed by peptide toner.',
@@ -72,7 +72,7 @@ const serviceCategories: ServiceCategory[] = [
       {
         id: 'colour-2',
         name: 'French Gloss & Tone Refinement',
-        price: '$ 95+',
+        price: '₹ 4,200+',
         duration: '60 min',
         category: 'Artisan Colour & Balayage',
         description: 'Acidic pH gloss formulation to neutralize brassiness and seal the hair cuticle with mirror shine.',
@@ -81,7 +81,7 @@ const serviceCategories: ServiceCategory[] = [
       {
         id: 'colour-3',
         name: 'Organic Root Melt & Lightening',
-        price: '$ 140+',
+        price: '₹ 6,200+',
         duration: '90 min',
         category: 'Artisan Colour & Balayage',
         description: 'Seamless low-maintenance regrowth transition formulated with organic botanical pigments.',
@@ -98,7 +98,7 @@ const serviceCategories: ServiceCategory[] = [
       {
         id: 'style-1',
         name: 'Red Carpet & Editorial Updo',
-        price: '$ 110+',
+        price: '₹ 4,800+',
         duration: '75 min',
         category: 'Editorial Styling & Occasion',
         description: 'Architectural structural silhouettes or soft romantic sculpted buns for gala evenings.',
@@ -107,7 +107,7 @@ const serviceCategories: ServiceCategory[] = [
       {
         id: 'style-2',
         name: 'Textural Parisian Wave',
-        price: '$ 70+',
+        price: '₹ 2,800+',
         duration: '50 min',
         category: 'Editorial Styling & Occasion',
         description: 'Carefree, lived-in bend with matte botanical sea-mineral texture.',
@@ -116,7 +116,7 @@ const serviceCategories: ServiceCategory[] = [
       {
         id: 'style-3',
         name: 'Atelier Bridal Preview Session',
-        price: '$ 160+',
+        price: '₹ 7,500+',
         duration: '120 min',
         category: 'Editorial Styling & Occasion',
         description: 'Comprehensive styling trial with veil placement and dupatta drape harmonization.',
@@ -133,7 +133,7 @@ const serviceCategories: ServiceCategory[] = [
       {
         id: 'skin-1',
         name: 'Botanical Lymphatic Facial Sculpt',
-        price: '$ 140+',
+        price: '₹ 5,800+',
         duration: '75 min',
         category: 'Skin & Barrier Restoration',
         description: 'Manual gua sha drainage combined with cold-pressed rosehip seed extract to contour jawline.',
@@ -142,7 +142,7 @@ const serviceCategories: ServiceCategory[] = [
       {
         id: 'skin-2',
         name: 'Cellular Hydration & Oxygen Drench',
-        price: '$ 160+',
+        price: '₹ 6,800+',
         duration: '80 min',
         category: 'Skin & Barrier Restoration',
         description: 'Hyperbaric pressurized botanical serum delivery deep into cellular matrix for glass-skin glow.',
@@ -151,7 +151,7 @@ const serviceCategories: ServiceCategory[] = [
       {
         id: 'skin-3',
         name: 'Marine Algae Calming Mask Ritual',
-        price: '$ 120+',
+        price: '₹ 4,800+',
         duration: '60 min',
         category: 'Skin & Barrier Restoration',
         description: 'Soothes inflammation, redness, and environmental barrier damage caused by urban pollution.',
@@ -168,7 +168,7 @@ const serviceCategories: ServiceCategory[] = [
       {
         id: 'spa-1',
         name: 'Japanese Shiatsu Head Spa & Steam',
-        price: '$ 130+',
+        price: '₹ 5,500+',
         duration: '75 min',
         category: 'Sensory Spa & Wellness Rituals',
         description: 'Continuous warm herbal waterfall bath, acupressure scalp stimulation, and herbal head mist.',
@@ -177,7 +177,7 @@ const serviceCategories: ServiceCategory[] = [
       {
         id: 'spa-2',
         name: 'Aromatic Botanical Scalp Polish',
-        price: '$ 95+',
+        price: '₹ 3,800+',
         duration: '60 min',
         category: 'Sensory Spa & Wellness Rituals',
         description: 'Gentle Himalayan pink salt scrub blended with jojoba oil to lift buildup and restore follicular health.',
@@ -186,7 +186,7 @@ const serviceCategories: ServiceCategory[] = [
       {
         id: 'spa-3',
         name: 'Tension Melt Neck & Shoulder Flow',
-        price: '$ 75+',
+        price: '₹ 3,000+',
         duration: '45 min',
         category: 'Sensory Spa & Wellness Rituals',
         description: 'Targeted acupressure release designed specifically for professionals carrying screen tension.',
