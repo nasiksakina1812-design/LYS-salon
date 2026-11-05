@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, Check, Calendar, ArrowRight } from 'lucide-react';
+import { X, Check, Calendar, ArrowRight, ArrowLeft } from 'lucide-react';
 import { motion, useReducedMotion } from 'motion/react';
 import { ServiceItem } from '../types';
 import { LUXURY_EASE } from './animations/MotionPrimitives';
@@ -44,9 +44,9 @@ export const BookingModal: React.FC<BookingModalProps> = ({
   ];
 
   const sensoryAromas = [
-    { name: 'Bergamot & Cedarwood', desc: 'Calming mental clarity & grounded focus' },
+    { name: 'Bergamot & Cedarwood', desc: 'Calming mental clarity & focus' },
     { name: 'Hinoki Wood & Yuzu', desc: 'Japanese spa steam bath relaxation' },
-    { name: 'Rose Otto & Frankincense', desc: 'Deep cellular restoration & grounding' },
+    { name: 'Rose Otto & Frankincense', desc: 'Deep cellular restoration' },
     { name: 'Fragrance-Free Pure', desc: 'Hypoallergenic botanical balance' },
   ];
 
@@ -73,25 +73,24 @@ export const BookingModal: React.FC<BookingModalProps> = ({
     };
     if (isOpen) {
       window.addEventListener('keydown', handleKeyDown);
-      document.body.style.overflow = 'hidden';
     }
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
-      document.body.style.overflow = 'unset';
     };
   }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!guestName || !guestPhone) return;
-    setIsSubmitted(true);
-  };
-
-  const handleReset = () => {
+  const handleBackToHome = () => {
     setIsSubmitted(false);
     onClose();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!guestName.trim() || !guestPhone.trim()) return;
+    setIsSubmitted(true);
   };
 
   const progressScore = React.useMemo(() => {
@@ -103,320 +102,327 @@ export const BookingModal: React.FC<BookingModalProps> = ({
     return Math.min(100, score);
   }, [selectedDate, selectedTime, selectedAroma, guestName, guestPhone]);
 
-  const circumference = 2 * Math.PI * 15;
-  const strokeDashoffset = circumference - (progressScore / 100) * circumference;
-
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-[#0A0C0A]/70 backdrop-blur-sm overflow-y-auto">
+    <div
+      className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-4 md:p-6 bg-[#0A0C0A]/75 backdrop-blur-xs overflow-hidden"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) handleBackToHome();
+      }}
+    >
       <motion.div
-        initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.96, y: 15 }}
+        initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.98, y: 10 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
-        exit={{ opacity: 0, scale: 0.96, y: 15 }}
-        transition={{ duration: 0.35, ease: LUXURY_EASE }}
-        className="relative w-full max-w-2xl bg-white rounded-3xl border border-[#BFD8BB] shadow-2xl overflow-hidden my-8"
+        exit={{ opacity: 0, scale: 0.98, y: 10 }}
+        transition={{ duration: 0.3, ease: LUXURY_EASE }}
+        className="relative w-full max-w-4xl max-h-[94vh] sm:max-h-[90vh] bg-white rounded-2xl sm:rounded-3xl border border-[#BFD8BB] shadow-2xl overflow-hidden flex flex-col"
       >
-        {/* Modal Header with Live Progress Ring */}
-        <div className="p-6 sm:p-8 bg-[#F6F9F5] border-b border-[#BFD8BB]/50 flex items-center justify-between">
-          <div>
-            <span className="block text-[10px] font-semibold tracking-[0.2em] text-[#6B7269] uppercase">
-              CONCIERGE RESERVATION
-            </span>
-            <h3 className="font-serif text-2xl font-normal text-[#0A0C0A] mt-0.5">
-              Curate Your Sanctuary Visit
-            </h3>
+        {/* Sticky Top Navigation Bar with Clear "Back to Home" & Clickable Logo */}
+        <div className="px-4 py-3 sm:px-6 sm:py-3.5 bg-[#F6F9F5] border-b border-[#BFD8BB]/50 flex items-center justify-between gap-3 shrink-0">
+          <div className="flex items-center gap-3 sm:gap-4 min-w-0">
+            {/* Back to Home Button */}
+            <button
+              type="button"
+              onClick={handleBackToHome}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-[#BFD8BB] bg-white text-[#0A0C0A] hover:bg-[#E7F1E5] hover:border-[#6C8E68] transition-all text-xs font-semibold cursor-pointer shadow-xs active:scale-95 group shrink-0"
+              aria-label="Back to Homepage"
+            >
+              <ArrowLeft className="w-3.5 h-3.5 text-[#6C8E68] transition-transform duration-200 group-hover:-translate-x-0.5" />
+              <span>Back to Home</span>
+            </button>
+
+            {/* Clickable Brand Logo */}
+            <button
+              type="button"
+              onClick={handleBackToHome}
+              className="flex items-baseline gap-1.5 cursor-pointer group text-left truncate"
+              title="Return to Homepage"
+            >
+              <span className="font-serif text-base sm:text-lg font-medium tracking-tight text-[#0A0C0A] group-hover:text-[#6C8E68] transition-colors truncate">
+                YOUR SALON
+              </span>
+              <span className="text-[9px] tracking-[0.2em] font-semibold text-[#6B7269] uppercase hidden md:inline shrink-0">
+                SALON & SPA
+              </span>
+            </button>
           </div>
 
-          <div className="flex items-center gap-3">
-            {/* SVG Circular Progress Ring */}
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-[#BFD8BB] shadow-xs">
-              <svg className="w-8 h-8 -rotate-90" viewBox="0 0 36 36">
-                <circle
-                  cx="18"
-                  cy="18"
-                  r="15"
-                  className="stroke-[#E7F1E5]"
-                  strokeWidth="3"
-                  fill="none"
-                />
-                <circle
-                  cx="18"
-                  cy="18"
-                  r="15"
-                  className="stroke-[#0A0C0A] transition-all duration-500 ease-out"
-                  strokeWidth="3"
-                  strokeDasharray={circumference}
-                  strokeDashoffset={strokeDashoffset}
-                  strokeLinecap="round"
-                  fill="none"
-                />
-              </svg>
-              <div className="text-right">
-                <span className="block text-[10px] font-bold text-[#0A0C0A] tabular-nums">
-                  {progressScore}%
-                </span>
-                <span className="block text-[8px] tracking-wider text-[#6B7269] uppercase">
-                  READY
-                </span>
-              </div>
+          {/* Right Header Elements: Progress indicator & Close Button */}
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+            <div className="hidden sm:flex items-center gap-2 px-2.5 py-1 rounded-full bg-white border border-[#BFD8BB]/70 shadow-xs">
+              <span className="w-2 h-2 rounded-full bg-[#6C8E68]" />
+              <span className="text-[10px] font-bold text-[#0A0C0A] tabular-nums">
+                {progressScore}% Complete
+              </span>
             </div>
 
             <button
-              onClick={onClose}
-              className="w-9 h-9 rounded-full bg-white border border-[#BFD8BB] flex items-center justify-center text-[#6B7269] hover:text-[#0A0C0A] hover:bg-[#E7F1E5] transition-colors cursor-pointer"
+              type="button"
+              onClick={handleBackToHome}
+              className="w-8 h-8 rounded-full bg-white border border-[#BFD8BB] flex items-center justify-center text-[#6B7269] hover:text-[#0A0C0A] hover:bg-[#E7F1E5] transition-colors cursor-pointer"
+              aria-label="Close"
+              title="Close and return to Homepage"
             >
               <X className="w-4 h-4" />
             </button>
           </div>
         </div>
 
-        {isSubmitted ? (
-          <div className="p-8 sm:p-12 text-center">
-            <div className="w-16 h-16 rounded-full bg-[#E7F1E5] border border-[#BFD8BB] flex items-center justify-center text-[#0A0C0A] mx-auto mb-6">
-              <Check className="w-8 h-8 text-[#6C8E68]" />
-            </div>
-            <span className="text-[10px] font-semibold tracking-[0.2em] text-[#6C8E68] uppercase font-bold">
-              CONFIRMATION NO. #YSN-8492
-            </span>
-            <h4 className="font-serif text-3xl font-normal text-[#0A0C0A] mt-2 mb-3">
-              Your ritual is reserved.
-            </h4>
-            <p className="font-sans text-sm text-[#6B7269] max-w-md mx-auto mb-8 leading-relaxed">
-              We look forward to welcoming you to our sanctuary atelier on{' '}
-              <strong className="text-[#0A0C0A] font-semibold">{selectedDate}</strong> at{' '}
-              <strong className="text-[#0A0C0A] font-semibold">{selectedTime}</strong> for{' '}
-              <strong className="text-[#0A0C0A] font-semibold">{selectedService}</strong>.
-            </p>
-
-            <div className="p-5 rounded-2xl bg-[#F6F9F5] border border-[#BFD8BB] max-w-md mx-auto text-left text-xs mb-8 space-y-2">
-              <div className="flex justify-between">
-                <span className="text-[#6B7269]">Ritual</span>
-                <span className="font-medium text-[#0A0C0A]">{selectedService}</span>
+        {/* Scrollable Form Content */}
+        <div className="flex-1 overflow-y-auto p-4 sm:p-6 overscroll-contain">
+          {isSubmitted ? (
+            <div className="p-6 sm:p-10 text-center max-w-lg mx-auto">
+              <div className="w-14 h-14 rounded-full bg-[#E7F1E5] border border-[#BFD8BB] flex items-center justify-center text-[#0A0C0A] mx-auto mb-4">
+                <Check className="w-7 h-7 text-[#6C8E68]" />
               </div>
-              <div className="flex justify-between">
-                <span className="text-[#6B7269]">Aromatherapy Note</span>
-                <span className="font-medium text-[#0A0C0A]">{selectedAroma}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-[#6B7269]">Patron Name</span>
-                <span className="font-medium text-[#0A0C0A]">{guestName}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-[#6B7269]">Desk Contact</span>
-                <span className="font-bold text-[#0A0C0A]">+91 (555) 000-0000</span>
-              </div>
-            </div>
-
-            <button
-              onClick={handleReset}
-              className="px-8 py-3.5 rounded-full bg-[#0A0C0A] text-white text-xs font-semibold tracking-[0.14em] uppercase hover:bg-[#BFD8BB] hover:text-[#0A0C0A] transition-colors cursor-pointer"
-            >
-              RETURN TO SANCTUARY
-            </button>
-          </div>
-        ) : (
-          <form onSubmit={handleSubmit} className="p-6 sm:p-8 space-y-8">
-            {/* Step 1: Selected Ritual */}
-            <div>
-              <label className="block text-[11px] font-semibold tracking-[0.18em] text-[#6B7269] uppercase mb-2">
-                1. Selected Treatment
-              </label>
-              <div className="p-4 rounded-2xl bg-[#F6F9F5] border border-[#BFD8BB] flex items-center justify-between">
-                <div>
-                  <h4 className="font-serif text-lg text-[#0A0C0A]">{selectedService}</h4>
-                  <span className="text-xs text-[#6B7269]">{selectedDuration} Profile</span>
-                </div>
-                <span className="font-sans text-sm font-semibold text-[#0A0C0A] tabular-nums">
-                  {selectedPrice}
-                </span>
-              </div>
-            </div>
-
-            {/* Step 2: Curated Date & Time Slot Carousel */}
-            <div>
-              <div className="flex items-center justify-between mb-2">
-                <label className="block text-[11px] font-semibold tracking-[0.18em] text-[#6B7269] uppercase">
-                  2. Select Date & Concierge Slot
-                </label>
-                <span className="text-xs text-[#6B7269] flex items-center gap-1">
-                  <Calendar className="w-3.5 h-3.5 text-[#6C8E68]" />
-                  October 2026
-                </span>
-              </div>
-
-              {/* Date Pills */}
-              <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
-                {dates.map((d) => {
-                  const isSelected = selectedDate === d.day;
-                  return (
-                    <button
-                      key={d.day}
-                      type="button"
-                      onClick={() => setSelectedDate(d.day)}
-                      className={`px-4 py-2.5 rounded-xl border text-left shrink-0 transition-all cursor-pointer ${
-                        isSelected
-                          ? 'bg-[#E7F1E5] border-[#0A0C0A] text-[#0A0C0A] shadow-xs'
-                          : 'bg-white border-[#BFD8BB] text-[#0A0C0A] hover:bg-[#F6F9F5]'
-                      }`}
-                    >
-                      <span className="block text-[9px] font-semibold tracking-wider uppercase text-[#6B7269]">
-                        {d.label}
-                      </span>
-                      <span className="font-serif text-sm font-medium">{d.day}</span>
-                    </button>
-                  );
-                })}
-              </div>
-
-              {/* Time Slots Carousel */}
-              <div className="grid grid-cols-3 sm:grid-cols-6 gap-2 mt-3">
-                {timeSlots.map((time) => {
-                  const isSelected = selectedTime === time;
-                  return (
-                    <button
-                      key={time}
-                      type="button"
-                      onClick={() => setSelectedTime(time)}
-                      className={`py-2 px-1 text-center rounded-xl border text-xs font-sans transition-all cursor-pointer ${
-                        isSelected
-                          ? 'bg-[#0A0C0A] text-white border-[#0A0C0A] shadow-xs'
-                          : 'bg-white border-[#BFD8BB] text-[#0A0C0A] hover:bg-[#E7F1E5]'
-                      }`}
-                    >
-                      {time}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Step 3: Sensory Aromatherapy Notes */}
-            <div>
-              <label className="block text-[11px] font-semibold tracking-[0.18em] text-[#6B7269] uppercase mb-2">
-                3. Complimentary Sensory Aromatherapy Infusion
-              </label>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                {sensoryAromas.map((aroma) => {
-                  const isSelected = selectedAroma === aroma.name;
-                  return (
-                    <button
-                      key={aroma.name}
-                      type="button"
-                      onClick={() => setSelectedAroma(aroma.name)}
-                      className={`p-3 rounded-xl border text-left transition-all cursor-pointer ${
-                        isSelected
-                          ? 'bg-[#E7F1E5] border-[#0A0C0A] text-[#0A0C0A]'
-                          : 'bg-white border-[#BFD8BB] text-[#0A0C0A] hover:bg-[#F6F9F5]'
-                      }`}
-                    >
-                      <span className="font-serif text-sm font-medium block text-[#0A0C0A]">
-                        {aroma.name}
-                      </span>
-                      <span className="text-[11px] text-[#6B7269] block mt-0.5">
-                        {aroma.desc}
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Step 4: Patron Information with Animated Floating Labels */}
-            <div className="space-y-4">
-              <label className="block text-[11px] font-semibold tracking-[0.18em] text-[#6B7269] uppercase mb-1">
-                4. Patron Details
-              </label>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {/* Full Name Floating Field */}
-                <div className="relative">
-                  <input
-                    id="guestName"
-                    type="text"
-                    required
-                    value={guestName}
-                    onChange={(e) => setGuestName(e.target.value)}
-                    placeholder=" "
-                    className="peer w-full px-4 pt-5 pb-2 rounded-xl bg-white border border-[#BFD8BB] text-sm text-[#0A0C0A] focus:outline-none focus:border-[#0A0C0A] focus:ring-1 focus:ring-[#0A0C0A]/10 transition-all"
-                  />
-                  <label
-                    htmlFor="guestName"
-                    className="absolute left-4 top-2 text-[10px] uppercase tracking-wider font-semibold text-[#6C8E68] transition-all duration-200 pointer-events-none peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-xs peer-placeholder-shown:text-[#6B7269] peer-placeholder-shown:normal-case peer-placeholder-shown:font-normal peer-focus:top-2 peer-focus:text-[10px] peer-focus:uppercase peer-focus:font-semibold peer-focus:text-[#0A0C0A]"
-                  >
-                    Full Name *
-                  </label>
-                </div>
-
-                {/* Contact Phone Floating Field */}
-                <div className="relative">
-                  <input
-                    id="guestPhone"
-                    type="tel"
-                    required
-                    value={guestPhone}
-                    onChange={(e) => setGuestPhone(e.target.value)}
-                    placeholder=" "
-                    className="peer w-full px-4 pt-5 pb-2 rounded-xl bg-white border border-[#BFD8BB] text-sm text-[#0A0C0A] focus:outline-none focus:border-[#0A0C0A] focus:ring-1 focus:ring-[#0A0C0A]/10 transition-all"
-                  />
-                  <label
-                    htmlFor="guestPhone"
-                    className="absolute left-4 top-2 text-[10px] uppercase tracking-wider font-semibold text-[#6C8E68] transition-all duration-200 pointer-events-none peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-xs peer-placeholder-shown:text-[#6B7269] peer-placeholder-shown:normal-case peer-placeholder-shown:font-normal peer-focus:top-2 peer-focus:text-[10px] peer-focus:uppercase peer-focus:font-semibold peer-focus:text-[#0A0C0A]"
-                  >
-                    WhatsApp Contact *
-                  </label>
-                </div>
-              </div>
-
-              {/* Email Floating Field */}
-              <div className="relative">
-                <input
-                  id="guestEmail"
-                  type="email"
-                  value={guestEmail}
-                  onChange={(e) => setGuestEmail(e.target.value)}
-                  placeholder=" "
-                  className="peer w-full px-4 pt-5 pb-2 rounded-xl bg-white border border-[#BFD8BB] text-sm text-[#0A0C0A] focus:outline-none focus:border-[#0A0C0A] focus:ring-1 focus:ring-[#0A0C0A]/10 transition-all"
-                />
-                <label
-                  htmlFor="guestEmail"
-                  className="absolute left-4 top-2 text-[10px] uppercase tracking-wider font-semibold text-[#6C8E68] transition-all duration-200 pointer-events-none peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-xs peer-placeholder-shown:text-[#6B7269] peer-placeholder-shown:normal-case peer-placeholder-shown:font-normal peer-focus:top-2 peer-focus:text-[10px] peer-focus:uppercase peer-focus:font-semibold peer-focus:text-[#0A0C0A]"
-                >
-                  Email Address (for calendar sync)
-                </label>
-              </div>
-
-              {/* Notes Floating Field */}
-              <div className="relative">
-                <textarea
-                  id="specialNotes"
-                  rows={2}
-                  value={specialNotes}
-                  onChange={(e) => setSpecialNotes(e.target.value)}
-                  placeholder=" "
-                  className="peer w-full px-4 pt-5 pb-2 rounded-xl bg-white border border-[#BFD8BB] text-sm text-[#0A0C0A] focus:outline-none focus:border-[#0A0C0A] focus:ring-1 focus:ring-[#0A0C0A]/10 transition-all resize-none"
-                />
-                <label
-                  htmlFor="specialNotes"
-                  className="absolute left-4 top-2 text-[10px] uppercase tracking-wider font-semibold text-[#6C8E68] transition-all duration-200 pointer-events-none peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-xs peer-placeholder-shown:text-[#6B7269] peer-placeholder-shown:normal-case peer-placeholder-shown:font-normal peer-focus:top-2 peer-focus:text-[10px] peer-focus:uppercase peer-focus:font-semibold peer-focus:text-[#0A0C0A]"
-                >
-                  Specific hair or scalp notes for aesthetician
-                </label>
-              </div>
-            </div>
-
-            {/* Submit Action */}
-            <div className="pt-2">
-              <button
-                type="submit"
-                className="w-full py-4 rounded-full bg-[#0A0C0A] text-white text-xs font-semibold tracking-[0.16em] uppercase hover:bg-[#BFD8BB] hover:text-[#0A0C0A] transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer shadow-lg active:scale-[0.99] border border-[#0A0C0A] group"
-              >
-                <span>CONFIRM CONCIERGE RESERVATION</span>
-                <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
-              </button>
-              <p className="text-center text-[10px] text-[#6B7269] mt-3">
-                No advance deposit required. Direct confirmation sent via SMS or email.
+              <span className="text-[10px] font-semibold tracking-[0.2em] text-[#6C8E68] uppercase font-bold">
+                CONFIRMATION NO. #YSN-8492
+              </span>
+              <h4 className="font-serif text-2xl sm:text-3xl font-normal text-[#0A0C0A] mt-1.5 mb-2">
+                Your ritual is reserved.
+              </h4>
+              <p className="font-sans text-xs sm:text-sm text-[#6B7269] mb-6 leading-relaxed">
+                We look forward to welcoming you to our sanctuary on{' '}
+                <strong className="text-[#0A0C0A] font-semibold">{selectedDate}</strong> at{' '}
+                <strong className="text-[#0A0C0A] font-semibold">{selectedTime}</strong> for{' '}
+                <strong className="text-[#0A0C0A] font-semibold">{selectedService}</strong>.
               </p>
+
+              <div className="p-4 rounded-xl bg-[#F6F9F5] border border-[#BFD8BB] text-left text-xs mb-6 space-y-2">
+                <div className="flex justify-between">
+                  <span className="text-[#6B7269]">Ritual</span>
+                  <span className="font-medium text-[#0A0C0A]">{selectedService}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-[#6B7269]">Aromatherapy</span>
+                  <span className="font-medium text-[#0A0C0A]">{selectedAroma}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-[#6B7269]">Patron Name</span>
+                  <span className="font-medium text-[#0A0C0A]">{guestName}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-[#6B7269]">Desk Contact</span>
+                  <span className="font-bold text-[#0A0C0A]">+91 (555) 000-0000</span>
+                </div>
+              </div>
+
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+                <button
+                  type="button"
+                  onClick={handleBackToHome}
+                  className="w-full sm:w-auto px-7 py-3 rounded-full bg-[#0A0C0A] text-white text-xs font-semibold tracking-[0.14em] uppercase hover:bg-[#BFD8BB] hover:text-[#0A0C0A] transition-colors cursor-pointer"
+                >
+                  Return to Home
+                </button>
+              </div>
             </div>
-          </form>
-        )}
+          ) : (
+            <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-12 gap-5 lg:gap-6 items-start">
+              {/* Left Column: Ritual + Schedule + Aromatherapy */}
+              <div className="md:col-span-6 space-y-4">
+                {/* Step 1: Selected Treatment */}
+                <div>
+                  <div className="flex items-center justify-between mb-1.5">
+                    <label className="text-[10px] font-bold tracking-[0.16em] text-[#6B7269] uppercase">
+                      1. Selected Treatment
+                    </label>
+                    <span className="text-[10px] text-[#6C8E68] font-semibold uppercase">
+                      Concierge Ritual
+                    </span>
+                  </div>
+                  <div className="p-3 rounded-xl bg-[#F6F9F5] border border-[#BFD8BB] flex items-center justify-between">
+                    <div className="min-w-0 pr-2">
+                      <h4 className="font-serif text-sm sm:text-base font-medium text-[#0A0C0A] truncate">
+                        {selectedService}
+                      </h4>
+                      <span className="text-[11px] text-[#6B7269]">{selectedDuration} Profile</span>
+                    </div>
+                    <span className="font-sans text-xs sm:text-sm font-bold text-[#0A0C0A] shrink-0 tabular-nums px-2.5 py-1 rounded-md bg-white border border-[#BFD8BB]/70">
+                      {selectedPrice}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Step 2: Date & Time Selection */}
+                <div>
+                  <div className="flex items-center justify-between mb-1.5">
+                    <label className="text-[10px] font-bold tracking-[0.16em] text-[#6B7269] uppercase">
+                      2. Select Date & Slot
+                    </label>
+                    <span className="text-[10px] text-[#6B7269] flex items-center gap-1 font-medium">
+                      <Calendar className="w-3 h-3 text-[#6C8E68]" />
+                      October 2026
+                    </span>
+                  </div>
+
+                  {/* Compact Date Chips */}
+                  <div className="grid grid-cols-5 gap-1.5 mb-2.5">
+                    {dates.map((d) => {
+                      const isSelected = selectedDate === d.day;
+                      return (
+                        <button
+                          key={d.day}
+                          type="button"
+                          onClick={() => setSelectedDate(d.day)}
+                          className={`p-1.5 sm:p-2 rounded-lg border text-center transition-all cursor-pointer ${
+                            isSelected
+                              ? 'bg-[#E7F1E5] border-[#0A0C0A] text-[#0A0C0A] shadow-xs font-semibold'
+                              : 'bg-white border-[#BFD8BB]/80 text-[#0A0C0A] hover:bg-[#F6F9F5]'
+                          }`}
+                        >
+                          <span className="block text-[8px] font-semibold uppercase text-[#6B7269] leading-tight">
+                            {d.weekday}
+                          </span>
+                          <span className="font-serif text-xs sm:text-sm font-medium">{d.day.split(' ')[0]}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  {/* Compact Time Slots */}
+                  <div className="grid grid-cols-3 sm:grid-cols-6 gap-1.5">
+                    {timeSlots.map((time) => {
+                      const isSelected = selectedTime === time;
+                      return (
+                        <button
+                          key={time}
+                          type="button"
+                          onClick={() => setSelectedTime(time)}
+                          className={`py-1.5 px-1 text-center rounded-lg border text-[11px] font-sans transition-all cursor-pointer ${
+                            isSelected
+                              ? 'bg-[#0A0C0A] text-white border-[#0A0C0A] shadow-xs font-semibold'
+                              : 'bg-white border-[#BFD8BB]/80 text-[#0A0C0A] hover:bg-[#E7F1E5]'
+                          }`}
+                        >
+                          {time}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Step 3: Complimentary Sensory Aromatherapy */}
+                <div>
+                  <label className="block text-[10px] font-bold tracking-[0.16em] text-[#6B7269] uppercase mb-1.5">
+                    3. Aromatherapy Infusion (Complimentary)
+                  </label>
+                  <div className="grid grid-cols-2 gap-2">
+                    {sensoryAromas.map((aroma) => {
+                      const isSelected = selectedAroma === aroma.name;
+                      return (
+                        <button
+                          key={aroma.name}
+                          type="button"
+                          onClick={() => setSelectedAroma(aroma.name)}
+                          className={`p-2 rounded-xl border text-left transition-all cursor-pointer ${
+                            isSelected
+                              ? 'bg-[#E7F1E5] border-[#0A0C0A] text-[#0A0C0A] shadow-xs'
+                              : 'bg-white border-[#BFD8BB]/80 text-[#0A0C0A] hover:bg-[#F6F9F5]'
+                          }`}
+                        >
+                          <span className="font-serif text-xs font-semibold block text-[#0A0C0A] truncate">
+                            {aroma.name}
+                          </span>
+                          <span className="text-[10px] text-[#6B7269] block truncate mt-0.5">
+                            {aroma.desc}
+                          </span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+
+              {/* Right Column: Patron Details & Submission */}
+              <div className="md:col-span-6 space-y-3.5 flex flex-col justify-between h-full">
+                <div>
+                  <label className="block text-[10px] font-bold tracking-[0.16em] text-[#6B7269] uppercase mb-1.5">
+                    4. Patron Contact Details
+                  </label>
+                  <div className="space-y-2.5">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                      {/* Full Name */}
+                      <div>
+                        <label htmlFor="guestName" className="block text-[10px] font-semibold text-[#0A0C0A] uppercase tracking-wider mb-1">
+                          Full Name *
+                        </label>
+                        <input
+                          id="guestName"
+                          type="text"
+                          required
+                          value={guestName}
+                          onChange={(e) => setGuestName(e.target.value)}
+                          placeholder="e.g. Victoria Sterling"
+                          className="w-full px-3 py-2 rounded-xl bg-white border border-[#BFD8BB] text-xs sm:text-sm text-[#0A0C0A] focus:outline-none focus:border-[#0A0C0A] focus:ring-1 focus:ring-[#0A0C0A]/10 transition-all placeholder:text-[#6B7269]/60"
+                        />
+                      </div>
+
+                      {/* WhatsApp / Phone */}
+                      <div>
+                        <label htmlFor="guestPhone" className="block text-[10px] font-semibold text-[#0A0C0A] uppercase tracking-wider mb-1">
+                          WhatsApp / Phone *
+                        </label>
+                        <input
+                          id="guestPhone"
+                          type="tel"
+                          required
+                          value={guestPhone}
+                          onChange={(e) => setGuestPhone(e.target.value)}
+                          placeholder="+91 000 000 0000"
+                          className="w-full px-3 py-2 rounded-xl bg-white border border-[#BFD8BB] text-xs sm:text-sm text-[#0A0C0A] focus:outline-none focus:border-[#0A0C0A] focus:ring-1 focus:ring-[#0A0C0A]/10 transition-all placeholder:text-[#6B7269]/60"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Email */}
+                    <div>
+                      <label htmlFor="guestEmail" className="block text-[10px] font-semibold text-[#0A0C0A] uppercase tracking-wider mb-1">
+                        Email (Calendar Sync)
+                      </label>
+                      <input
+                        id="guestEmail"
+                        type="email"
+                        value={guestEmail}
+                        onChange={(e) => setGuestEmail(e.target.value)}
+                        placeholder="name@example.com"
+                        className="w-full px-3 py-2 rounded-xl bg-white border border-[#BFD8BB] text-xs sm:text-sm text-[#0A0C0A] focus:outline-none focus:border-[#0A0C0A] focus:ring-1 focus:ring-[#0A0C0A]/10 transition-all placeholder:text-[#6B7269]/60"
+                      />
+                    </div>
+
+                    {/* Notes */}
+                    <div>
+                      <label htmlFor="specialNotes" className="block text-[10px] font-semibold text-[#0A0C0A] uppercase tracking-wider mb-1">
+                        Hair / Scalp Notes for Stylist
+                      </label>
+                      <textarea
+                        id="specialNotes"
+                        rows={2}
+                        value={specialNotes}
+                        onChange={(e) => setSpecialNotes(e.target.value)}
+                        placeholder="Notes for aesthetician (e.g. sensitive scalp, toner preference)..."
+                        className="w-full px-3 py-2 rounded-xl bg-white border border-[#BFD8BB] text-xs sm:text-sm text-[#0A0C0A] focus:outline-none focus:border-[#0A0C0A] focus:ring-1 focus:ring-[#0A0C0A]/10 transition-all resize-none placeholder:text-[#6B7269]/60"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Submit Action */}
+                <div className="pt-2">
+                  <button
+                    type="submit"
+                    className="w-full py-3 rounded-full bg-[#0A0C0A] text-white text-xs font-semibold tracking-[0.14em] uppercase hover:bg-[#BFD8BB] hover:text-[#0A0C0A] transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer shadow-md active:scale-[0.99] border border-[#0A0C0A] group"
+                  >
+                    <span>Confirm Concierge Reservation</span>
+                    <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
+                  </button>
+                  <p className="text-center text-[10px] text-[#6B7269] mt-2">
+                    No advance deposit required · Immediate confirmation sent
+                  </p>
+                </div>
+              </div>
+            </form>
+          )}
+        </div>
       </motion.div>
     </div>
   );

@@ -1,60 +1,35 @@
-import React, { useEffect, useRef } from 'react';
-import Lenis from 'lenis';
-import { ANIMATION_CONFIG } from './animationConfig';
+import React, { useEffect } from 'react';
 
 interface SmoothScrollProviderProps {
   children: React.ReactNode;
   isModalOpen?: boolean;
 }
 
+/**
+ * High-performance scroll provider that relies on native browser scrolling
+ * for stutter-free 60fps/120fps scrolling on desktop and mobile.
+ */
 export const SmoothScrollProvider: React.FC<SmoothScrollProviderProps> = ({
   children,
   isModalOpen = false,
 }) => {
-  const lenisRef = useRef<Lenis | null>(null);
-
+  // Lock body scroll cleanly when modal is active, restore on close
   useEffect(() => {
-    if (!ANIMATION_CONFIG.features.enableLenisSmoothScroll) return;
-    const prefersReducedMotion = window.matchMedia(
-      '(prefers-reduced-motion: reduce)'
-    ).matches;
-
-    if (prefersReducedMotion) return;
-
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // luxury smooth deceleration
-      orientation: 'vertical',
-      gestureOrientation: 'vertical',
-      smoothWheel: true,
-      wheelMultiplier: 0.9,
-      touchMultiplier: 1.5,
-    });
-
-    lenisRef.current = lenis;
-
-    let rafId: number;
-    function raf(time: number) {
-      lenis.raf(time);
-      rafId = requestAnimationFrame(raf);
-    }
-
-    rafId = requestAnimationFrame(raf);
-
-    return () => {
-      cancelAnimationFrame(rafId);
-      lenis.destroy();
-      lenisRef.current = null;
-    };
-  }, []);
-
-  // When a modal is open, pause Lenis to prevent window background scrolling
-  useEffect(() => {
-    if (!lenisRef.current) return;
     if (isModalOpen) {
-      lenisRef.current.stop();
+      const scrollY = window.scrollY;
+      document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = '100%';
     } else {
-      lenisRef.current.start();
+      const scrollY = document.body.style.top;
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      if (scrollY) {
+        window.scrollTo(0, parseInt(scrollY || '0', 10) * -1);
+      }
     }
   }, [isModalOpen]);
 

@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Sparkles, Scissors, Droplets, Wind, Sparkle, Eye } from 'lucide-react';
-import { motion, useScroll, useSpring, useTransform } from 'motion/react';
+import { motion, useScroll } from 'motion/react';
 import { ANIMATION_CONFIG } from './animationConfig';
 import { SmartImage } from '../SmartImage';
 import { MaskedHeadingReveal } from './MaskedHeadingReveal';
@@ -84,20 +84,18 @@ export const ScrollStorytelling: React.FC<{ onOpenBooking?: () => void }> = ({
     offset: ['start start', 'end end'],
   });
 
-  const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 120,
-    damping: 24,
-    restDelta: 0.001,
-  });
-
-  // Calculate active step based on scroll progress
+  // Calculate active step only when index changes to prevent re-render cascades
   useEffect(() => {
+    let currentStepIndex = 0;
     const unsubscribe = scrollYProgress.on('change', (latest) => {
       const stepIndex = Math.min(
         ritualSteps.length - 1,
         Math.floor(latest * ritualSteps.length)
       );
-      setActiveStep(stepIndex);
+      if (stepIndex !== currentStepIndex) {
+        currentStepIndex = stepIndex;
+        setActiveStep(stepIndex);
+      }
     });
     return () => unsubscribe();
   }, [scrollYProgress]);
@@ -115,7 +113,7 @@ export const ScrollStorytelling: React.FC<{ onOpenBooking?: () => void }> = ({
         {/* Section Header */}
         <div className="max-w-2xl mb-16 lg:mb-20">
           <div className="inline-flex items-center gap-2 mb-3 text-[11px] font-semibold tracking-[0.22em] text-[#BFD8BB] uppercase">
-            <span className="w-2 h-2 rounded-full bg-[#BFD8BB] animate-pulse" />
+            <span className="w-2 h-2 rounded-full bg-[#BFD8BB]" />
             <span>THE 5-STEP BESPOKE RITUAL</span>
           </div>
           <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal text-white leading-tight">
@@ -137,17 +135,11 @@ export const ScrollStorytelling: React.FC<{ onOpenBooking?: () => void }> = ({
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start relative">
           {/* Left Column: Progress Line & Milestones */}
           <div className="lg:col-span-5 relative">
-            {/* Dynamic Vertical SVG Progress Line */}
-            <div className="absolute left-[23px] top-6 bottom-6 w-[2px] bg-white/10 hidden sm:block">
+            {/* Dynamic Vertical SVG Progress Line using GPU scaleY */}
+            <div className="absolute left-[23px] top-6 bottom-6 w-[2px] bg-white/10 hidden sm:block overflow-hidden">
               <motion.div
-                className="w-full bg-gradient-to-b from-[#BFD8BB] via-[#E7F1E5] to-[#6C8E68] origin-top shadow-[0_0_12px_rgba(191,216,187,0.7)]"
-                style={{
-                  height: useTransform(
-                    smoothProgress,
-                    [0, 1],
-                    ['0%', '100%']
-                  ),
-                }}
+                className="w-full h-full bg-gradient-to-b from-[#BFD8BB] via-[#E7F1E5] to-[#6C8E68] origin-top"
+                style={{ scaleY: scrollYProgress }}
               />
             </div>
 

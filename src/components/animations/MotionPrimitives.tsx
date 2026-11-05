@@ -27,7 +27,7 @@ export const TextReveal: React.FC<TextRevealProps> = ({
 }) => {
   const shouldReduceMotion = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: '-50px' });
+  const isInView = useInView(ref, { once: true, margin: '100px 0px 50px 0px' });
 
   if (shouldReduceMotion) {
     const Component = as as any;
@@ -70,7 +70,7 @@ export const StaggerContainer: React.FC<{
 }> = ({ children, className = '', delay = 0, staggerDelay = 0.1 }) => {
   const shouldReduceMotion = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: '-60px' });
+  const isInView = useInView(ref, { once: true, margin: '100px 0px 50px 0px' });
 
   if (shouldReduceMotion) {
     return <div className={className}>{children}</div>;
@@ -142,59 +142,37 @@ interface CurvedImageRevealProps {
 export const CurvedImageReveal: React.FC<CurvedImageRevealProps> = ({
   children,
   className = '',
-  shape = 'circle',
   delay = 0.1,
 }) => {
   const shouldReduceMotion = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: '200px 0px 200px 0px' });
+  const isInView = useInView(ref, { once: true, margin: '150px 0px 100px 0px' });
 
   if (shouldReduceMotion) {
     return <div className={className}>{children}</div>;
   }
-
-  // Predefined luxury curved mask paths that ensure content is always visible
-  const getClipPath = (isRevealed: boolean) => {
-    if (shape === 'circle') {
-      return isRevealed
-        ? 'circle(150% at 50% 50%)'
-        : 'circle(95% at 50% 50%)';
-    }
-    if (shape === 'arch') {
-      return isRevealed
-        ? 'inset(0% 0% 0% 0% round 180px 180px 24px 24px)'
-        : 'inset(0% 0% 0% 0% round 120px 120px 24px 24px)';
-    }
-    // oval
-    return isRevealed
-      ? 'ellipse(140% 140% at 50% 50%)'
-      : 'ellipse(95% 95% at 50% 50%)';
-  };
 
   return (
     <motion.div
       ref={ref}
       className={`relative overflow-hidden ${className}`}
       initial={{
-        clipPath: getClipPath(false),
         opacity: 0.85,
-        scale: 1.02,
+        scale: 1.025,
       }}
       animate={
         isInView
           ? {
-              clipPath: getClipPath(true),
               opacity: 1,
               scale: 1,
             }
           : {
-              clipPath: getClipPath(false),
-              opacity: 0.9,
-              scale: 1.01,
+              opacity: 0.85,
+              scale: 1.025,
             }
       }
       transition={{
-        duration: 0.9,
+        duration: 0.7,
         delay,
         ease: LUXURY_EASE,
       }}
@@ -218,59 +196,89 @@ interface TiltCardProps extends React.HTMLAttributes<HTMLDivElement> {
 export const TiltCard: React.FC<TiltCardProps> = ({
   children,
   className = '',
-  maxTilt = 6,
+  maxTilt = 5,
   glareOpacity = 0.12,
   ...props
 }) => {
   const cardRef = useRef<HTMLDivElement>(null);
-  const [tilt, setTilt] = useState({ rotateX: 0, rotateY: 0 });
-  const [glare, setGlare] = useState({ x: 50, y: 50, opacity: 0 });
-  const [isHovered, setIsHovered] = useState(false);
-  const [isTouchDevice, setIsTouchDevice] = useState(false);
+  const innerRef = useRef<HTMLDivElement>(null);
+  const glareRef = useRef<HTMLDivElement>(null);
+  const rectRef = useRef<{ left: number; top: number; width: number; height: number } | null>(null);
+  const rafIdRef = useRef<number | null>(null);
+  const isTouchDeviceRef = useRef<boolean>(false);
   const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
-    setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0);
+    isTouchDeviceRef.current = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
   }, []);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (isTouchDevice || shouldReduceMotion || !cardRef.current) return;
-
+  const handleMouseEnter = () => {
+    if (isTouchDeviceRef.current || shouldReduceMotion || !cardRef.current) return;
     const rect = cardRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-
-    const xPct = (x / rect.width - 0.5) * 2;
-    const yPct = (y / rect.height - 0.5) * 2;
-
-    setTilt({
-      rotateX: -yPct * maxTilt,
-      rotateY: xPct * maxTilt,
-    });
-
-    setGlare({
-      x: (x / rect.width) * 100,
-      y: (y / rect.height) * 100,
-      opacity: glareOpacity,
-    });
+    rectRef.current = {
+      left: rect.left,
+      top: rect.top,
+      width: rect.width || 1,
+      height: rect.height || 1,
+    };
+    if (innerRef.current) {
+      innerRef.current.style.transition = 'transform 0.15s cubic-bezier(0.16, 1, 0.3, 1)';
+    }
   };
 
-  const handleMouseEnter = () => {
-    if (isTouchDevice || shouldReduceMotion) return;
-    setIsHovered(true);
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (isTouchDeviceRef.current || shouldReduceMotion || !rectRef.current) return;
+
+    if (rafIdRef.current) return; // Drop redundant frames
+
+    const clientX = e.clientX;
+    const clientY = e.clientY;
+
+    rafIdRef.current = requestAnimationFrame(() => {
+      rafIdRef.current = null;
+      if (!rectRef.current || !innerRef.current) return;
+
+      const { left, top, width, height } = rectRef.current;
+      const x = clientX - left;
+      const y = clientY - top;
+
+      const xPct = Math.max(-1, Math.min(1, (x / width - 0.5) * 2));
+      const yPct = Math.max(-1, Math.min(1, (y / height - 0.5) * 2));
+
+      const rotX = -yPct * maxTilt;
+      const rotY = xPct * maxTilt;
+
+      innerRef.current.style.transform = `rotateX(${rotX.toFixed(2)}deg) rotateY(${rotY.toFixed(2)}deg) scale3d(1.012, 1.012, 1)`;
+
+      if (glareRef.current) {
+        const gx = ((x / width) * 100).toFixed(1);
+        const gy = ((y / height) * 100).toFixed(1);
+        glareRef.current.style.opacity = `${glareOpacity}`;
+        glareRef.current.style.background = `radial-gradient(circle at ${gx}% ${gy}%, rgba(255, 255, 255, 0.7) 0%, rgba(191, 216, 187, 0.2) 40%, transparent 70%)`;
+      }
+    });
   };
 
   const handleMouseLeave = () => {
-    setIsHovered(false);
-    setTilt({ rotateX: 0, rotateY: 0 });
-    setGlare((prev) => ({ ...prev, opacity: 0 }));
+    if (rafIdRef.current) {
+      cancelAnimationFrame(rafIdRef.current);
+      rafIdRef.current = null;
+    }
+    rectRef.current = null;
+    if (innerRef.current) {
+      innerRef.current.style.transition = 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
+      innerRef.current.style.transform = 'rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+    }
+    if (glareRef.current) {
+      glareRef.current.style.opacity = '0';
+    }
   };
 
   return (
     <div
       ref={cardRef}
-      onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
+      onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       style={{
         perspective: '1000px',
@@ -280,28 +288,16 @@ export const TiltCard: React.FC<TiltCardProps> = ({
       {...props}
     >
       <div
-        style={{
-          transform: !shouldReduceMotion && !isTouchDevice
-            ? `rotateX(${tilt.rotateX}deg) rotateY(${tilt.rotateY}deg) scale3d(${
-                isHovered ? 1.015 : 1
-              }, ${isHovered ? 1.015 : 1}, 1)`
-            : undefined,
-          transition: isHovered
-            ? 'transform 0.15s cubic-bezier(0.16, 1, 0.3, 1)'
-            : 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
-        }}
+        ref={innerRef}
         className="w-full h-full relative"
       >
         {children}
 
-        {/* Dynamic Specular Sheen Overlay */}
-        {!isTouchDevice && !shouldReduceMotion && (
+        {/* Specular Sheen Overlay */}
+        {!shouldReduceMotion && (
           <div
-            className="absolute inset-0 pointer-events-none rounded-[inherit] transition-opacity duration-300 z-30"
-            style={{
-              opacity: glare.opacity,
-              background: `radial-gradient(circle at ${glare.x}% ${glare.y}%, rgba(255, 255, 255, 0.85) 0%, rgba(191, 216, 187, 0.25) 40%, transparent 70%)`,
-            }}
+            ref={glareRef}
+            className="absolute inset-0 pointer-events-none rounded-[inherit] transition-opacity duration-300 z-30 opacity-0"
           />
         )}
       </div>
@@ -319,7 +315,7 @@ export const CinematicSectionReveal: React.FC<{
 }> = ({ children, id, className = '' }) => {
   const shouldReduceMotion = useReducedMotion();
   const ref = useRef<HTMLElement>(null);
-  const isInView = useInView(ref, { once: true, margin: '-70px' });
+  const isInView = useInView(ref, { once: true, margin: '100px 0px 50px 0px' });
 
   if (shouldReduceMotion) {
     return (

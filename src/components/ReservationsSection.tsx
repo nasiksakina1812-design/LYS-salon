@@ -22,18 +22,12 @@ export const ReservationsSection: React.FC<ReservationsSectionProps> = ({
       id="find-us"
       className="py-24 lg:py-32 bg-[#0A0C0A] text-white overflow-hidden relative"
     >
-      {/* Background ambient glow in pastel green with subtle breathing */}
-      <motion.div
-        animate={
-          shouldReduceMotion
-            ? {}
-            : {
-                scale: [1, 1.15, 1],
-                opacity: [0.15, 0.25, 0.15],
-              }
-        }
-        transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
-        className="absolute top-1/2 left-0 w-96 h-96 bg-[#BFD8BB]/20 rounded-full blur-3xl pointer-events-none"
+      {/* Background ambient glow in pastel green - optimized static radial gradient */}
+      <div
+        className="absolute top-1/2 left-0 w-96 h-96 rounded-full pointer-events-none"
+        style={{
+          background: 'radial-gradient(circle, rgba(191,216,187,0.22) 0%, transparent 70%)',
+        }}
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-8 relative z-10">

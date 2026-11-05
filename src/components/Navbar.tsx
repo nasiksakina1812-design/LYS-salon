@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, ArrowUpRight, Phone } from 'lucide-react';
-import { motion, useScroll, useSpring, AnimatePresence } from 'motion/react';
+import { motion, useScroll, AnimatePresence } from 'motion/react';
 import { MagneticButton } from './animations/MagneticButton';
 
 interface NavbarProps {
@@ -12,13 +12,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string>('');
 
-  // Top viewport scroll progress bar
+  // Top viewport scroll progress bar - bound directly to GPU compositor without useSpring CPU physics
   const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001,
-  });
 
   const navLinks = [
     { name: 'THE EXPERIENCE', href: '#experience', id: 'experience' },
@@ -30,10 +25,15 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking }) => {
 
   useEffect(() => {
     let ticking = false;
+    let isScrolled = false;
     const handleScroll = () => {
       if (!ticking) {
         window.requestAnimationFrame(() => {
-          setScrolled(window.scrollY > 20);
+          const nowScrolled = window.scrollY > 20;
+          if (nowScrolled !== isScrolled) {
+            isScrolled = nowScrolled;
+            setScrolled(nowScrolled);
+          }
           ticking = false;
         });
         ticking = true;
@@ -80,7 +80,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking }) => {
       {/* Cinematic Top Scroll Progress Bar */}
       <motion.div
         className="fixed top-0 left-0 right-0 h-[2.5px] bg-[#BFD8BB] origin-left z-50 pointer-events-none"
-        style={{ scaleX }}
+        style={{ scaleX: scrollYProgress }}
       />
 
       <header

@@ -65,11 +65,10 @@ export const FannedCardStack: React.FC<FannedCardStackProps> = ({
             animate={
               isInView
                 ? {
-                    opacity: isOther ? 0.55 : 1,
+                    opacity: isOther ? 0.6 : 1,
                     y: isHovered ? -12 : fanY,
                     rotate: isHovered ? 0 : fanRotation,
                     scale: isHovered ? 1.025 : 1,
-                    filter: isOther ? 'blur(1.5px)' : 'blur(0px)',
                   }
                 : {
                     opacity: 0,

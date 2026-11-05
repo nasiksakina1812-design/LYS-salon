@@ -142,24 +142,8 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
                 transition={{ duration: 1.2, delay: 0.2, ease: LUXURY_EASE }}
                 className="relative rounded-t-[180px] rounded-b-3xl overflow-hidden shadow-[0_24px_50px_-12px_rgba(10,12,10,0.12)] border border-[#BFD8BB] bg-white group"
               >
-                {/* Slow Ken Burns Movement Layer */}
-                <motion.div
-                  animate={
-                    shouldReduceMotion
-                      ? {}
-                      : {
-                          scale: [1, 1.045, 1],
-                          y: [0, -8, 0],
-                        }
-                  }
-                  transition={{
-                    duration: 16,
-                    repeat: Infinity,
-                    repeatType: 'reverse',
-                    ease: 'easeInOut',
-                  }}
-                  className="w-full h-full will-change-transform"
-                >
+                {/* Architectural Portrait with hover zoom */}
+                <div className="w-full h-full overflow-hidden">
                   <SmartImage
                     src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format,compress&fit=crop&w=860&q=80&fm=webp"
                     srcSet="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format,compress&fit=crop&w=430&q=80&fm=webp 430w, https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format,compress&fit=crop&w=860&q=80&fm=webp 860w"
@@ -168,11 +152,11 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
                     width={430}
                     height={580}
                     priority={true}
-                    className="w-full h-[520px] sm:h-[580px] object-cover object-top filter brightness-[0.98] contrast-[1.02] transition-transform duration-700"
+                    className="w-full h-[520px] sm:h-[580px] object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
                     fallbackTitle="Bespoke Radiance"
                     fallbackSubtitle="Architectural beauty rituals tailored to your facial contours"
                   />
-                </motion.div>
+                </div>
 
                 {/* Floating Atelier Badge (Top Right) */}
                 <motion.div

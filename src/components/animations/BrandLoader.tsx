@@ -47,7 +47,12 @@ export const BrandLoader: React.FC<BrandLoaderProps> = ({ onComplete }) => {
           className="fixed inset-0 z-[10000] bg-[#0A0C0A] text-white flex flex-col items-center justify-center overflow-hidden select-none"
         >
           {/* Subtle ambient pastel glow in background */}
-          <div className="absolute w-[450px] h-[450px] rounded-full bg-[#BFD8BB]/10 blur-[100px] pointer-events-none" />
+          <div
+            className="absolute w-[450px] h-[450px] rounded-full pointer-events-none"
+            style={{
+              background: 'radial-gradient(circle, rgba(191,216,187,0.18) 0%, transparent 70%)',
+            }}
+          />
 
           {/* Skip Button */}
           <button

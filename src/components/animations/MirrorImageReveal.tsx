@@ -24,34 +24,62 @@ export const MirrorImageReveal: React.FC<MirrorImageRevealProps> = ({
   const [tilt, setTilt] = useState({ rotateX: 0, rotateY: 0 });
   const [glarePos, setGlarePos] = useState({ x: 50, y: 50, opacity: 0 });
   const [isTouchDevice, setIsTouchDevice] = useState(false);
+  const rectRef = useRef<{ left: number; top: number; width: number; height: number } | null>(null);
+  const rafIdRef = useRef<number | null>(null);
 
   useEffect(() => {
     setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0);
   }, []);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleMouseEnter = () => {
     if (isTouchDevice || shouldReduceMotion || !enableTilt || !containerRef.current) return;
-
     const rect = containerRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
+    rectRef.current = {
+      left: rect.left,
+      top: rect.top,
+      width: rect.width || 1,
+      height: rect.height || 1,
+    };
+  };
 
-    const xPct = (x / rect.width - 0.5) * 2;
-    const yPct = (y / rect.height - 0.5) * 2;
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (isTouchDevice || shouldReduceMotion || !enableTilt || !rectRef.current) return;
 
-    setTilt({
-      rotateX: -yPct * ANIMATION_CONFIG.timing.cardTiltMax,
-      rotateY: xPct * ANIMATION_CONFIG.timing.cardTiltMax,
-    });
+    if (rafIdRef.current) return;
 
-    setGlarePos({
-      x: (x / rect.width) * 100,
-      y: (y / rect.height) * 100,
-      opacity: 0.18,
+    const clientX = e.clientX;
+    const clientY = e.clientY;
+
+    rafIdRef.current = requestAnimationFrame(() => {
+      rafIdRef.current = null;
+      if (!rectRef.current) return;
+
+      const { left, top, width, height } = rectRef.current;
+      const x = clientX - left;
+      const y = clientY - top;
+
+      const xPct = (x / width - 0.5) * 2;
+      const yPct = (y / height - 0.5) * 2;
+
+      setTilt({
+        rotateX: -yPct * ANIMATION_CONFIG.timing.cardTiltMax,
+        rotateY: xPct * ANIMATION_CONFIG.timing.cardTiltMax,
+      });
+
+      setGlarePos({
+        x: (x / width) * 100,
+        y: (y / height) * 100,
+        opacity: 0.16,
+      });
     });
   };
 
   const handleMouseLeave = () => {
+    if (rafIdRef.current) {
+      cancelAnimationFrame(rafIdRef.current);
+      rafIdRef.current = null;
+    }
+    rectRef.current = null;
     setTilt({ rotateX: 0, rotateY: 0 });
     setGlarePos((prev) => ({ ...prev, opacity: 0 }));
   };
@@ -67,6 +95,7 @@ export const MirrorImageReveal: React.FC<MirrorImageRevealProps> = ({
   return (
     <div
       ref={containerRef}
+      onMouseEnter={handleMouseEnter}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       className={`relative overflow-hidden ${className}`}
@@ -91,20 +120,20 @@ export const MirrorImageReveal: React.FC<MirrorImageRevealProps> = ({
           className="w-full h-full relative overflow-hidden"
           initial={{
             clipPath: 'inset(100% 0% 0% 0%)',
-            scale: 1.08,
-            filter: 'brightness(1.15) contrast(0.95)',
+            scale: 1.04,
+            opacity: 0.8,
           }}
           animate={
             isInView
               ? {
                   clipPath: 'inset(0% 0% 0% 0%)',
                   scale: 1,
-                  filter: 'brightness(1) contrast(1)',
+                  opacity: 1,
                 }
               : {
                   clipPath: 'inset(100% 0% 0% 0%)',
-                  scale: 1.08,
-                  filter: 'brightness(1.15) contrast(0.95)',
+                  scale: 1.04,
+                  opacity: 0.8,
                 }
           }
           transition={{

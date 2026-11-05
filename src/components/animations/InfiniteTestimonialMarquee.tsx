@@ -29,7 +29,7 @@ export const InfiniteTestimonialMarquee: React.FC<InfiniteTestimonialMarqueeProp
 
       {/* Marquee Track */}
       <div
-        className="flex items-stretch gap-6 w-max transition-all"
+        className="flex items-stretch gap-6 w-max will-change-transform"
         style={{
           animation: `marqueeScroll ${
             isHovered
@@ -80,10 +80,10 @@ export const InfiniteTestimonialMarquee: React.FC<InfiniteTestimonialMarqueeProp
       <style>{`
         @keyframes marqueeScroll {
           0% {
-            transform: translateX(0);
+            transform: translate3d(0, 0, 0);
           }
           100% {
-            transform: translateX(-33.333%);
+            transform: translate3d(-33.333%, 0, 0);
           }
         }
       `}</style>

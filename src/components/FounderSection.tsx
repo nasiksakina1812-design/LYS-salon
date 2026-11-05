@@ -32,8 +32,13 @@ export const FounderSection: React.FC<FounderSectionProps> = ({ onOpenBooking })
 
   return (
     <section id="founder" className="py-24 lg:py-32 bg-white relative overflow-hidden border-y border-[#BFD8BB]/50">
-      {/* Ambient background glow */}
-      <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-[#E7F1E5]/40 blur-3xl pointer-events-none" />
+      {/* Ambient background glow: Optimized radial gradient without GPU blur-3xl pass */}
+      <div
+        className="absolute top-1/2 right-0 -translate-y-1/2 w-[500px] h-[500px] rounded-full pointer-events-none"
+        style={{
+          background: 'radial-gradient(circle, rgba(231,241,229,0.55) 0%, transparent 70%)',
+        }}
+      />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-8 relative z-10">
         {/* Section Eyebrow */}

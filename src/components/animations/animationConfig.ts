@@ -72,7 +72,7 @@ export const ANIMATION_CONFIG = {
   // Feature switches & runtime flags
   features: {
     enableCustomCursor: false,
-    enableLenisSmoothScroll: true,
+    enableLenisSmoothScroll: false,
     enableHeroHairStrands: true,
     enableMirrorImageGlairs: true,
     enableScissorSlider: true,

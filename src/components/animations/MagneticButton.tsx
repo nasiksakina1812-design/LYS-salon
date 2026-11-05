@@ -20,76 +20,101 @@ export const MagneticButton: React.FC<MagneticButtonProps> = ({
   ...props
 }) => {
   const buttonRef = useRef<HTMLButtonElement>(null);
-  const [offset, setOffset] = useState({ x: 0, y: 0 });
-  const [fillOrigin, setFillOrigin] = useState({ x: 50, y: 50 });
+  const fillLayerRef = useRef<HTMLSpanElement>(null);
+  const rectRef = useRef<{ left: number; top: number; width: number; height: number } | null>(null);
+  const rafIdRef = useRef<number | null>(null);
+  const isTouchRef = useRef<boolean>(false);
   const [isHovered, setIsHovered] = useState(false);
-  const [isTouch, setIsTouch] = useState(false);
 
   useEffect(() => {
-    setIsTouch('ontouchstart' in window || navigator.maxTouchPoints > 0);
+    isTouchRef.current = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
   }, []);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (isTouch || !buttonRef.current) return;
-
-    const rect = buttonRef.current.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-
-    const dx = e.clientX - centerX;
-    const dy = e.clientY - centerY;
-    const distance = Math.sqrt(dx * dx + dy * dy);
-
-    if (distance < magneticRadius) {
-      setOffset({
-        x: dx * magneticPull,
-        y: dy * magneticPull,
-      });
-    }
-  };
-
   const handleMouseEnter = (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (isTouch || !buttonRef.current) return;
+    if (isTouchRef.current || !buttonRef.current) return;
     setIsHovered(true);
 
     const rect = buttonRef.current.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = ((e.clientY - rect.top) / rect.height) * 100;
-    setFillOrigin({ x, y });
+    rectRef.current = {
+      left: rect.left,
+      top: rect.top,
+      width: rect.width || 1,
+      height: rect.height || 1,
+    };
+
+    if (fillLayerRef.current) {
+      const x = (((e.clientX - rect.left) / rect.width) * 100).toFixed(1);
+      const y = (((e.clientY - rect.top) / rect.height) * 100).toFixed(1);
+      fillLayerRef.current.style.left = `${x}%`;
+      fillLayerRef.current.style.top = `${y}%`;
+      fillLayerRef.current.style.transform = 'translate(-50%, -50%) scale(1)';
+    }
+
+    buttonRef.current.style.transition = 'transform 0.12s cubic-bezier(0.16, 1, 0.3, 1)';
+  };
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (isTouchRef.current || !rectRef.current || !buttonRef.current) return;
+
+    if (rafIdRef.current) return;
+
+    const clientX = e.clientX;
+    const clientY = e.clientY;
+
+    rafIdRef.current = requestAnimationFrame(() => {
+      rafIdRef.current = null;
+      if (!rectRef.current || !buttonRef.current) return;
+
+      const { left, top, width, height } = rectRef.current;
+      const centerX = left + width / 2;
+      const centerY = top + height / 2;
+
+      const dx = clientX - centerX;
+      const dy = clientY - centerY;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+
+      if (distance < magneticRadius) {
+        const mx = (dx * magneticPull).toFixed(2);
+        const my = (dy * magneticPull).toFixed(2);
+        buttonRef.current.style.transform = `translate3d(${mx}px, ${my}px, 0)`;
+      }
+    });
   };
 
   const handleMouseLeave = () => {
+    if (rafIdRef.current) {
+      cancelAnimationFrame(rafIdRef.current);
+      rafIdRef.current = null;
+    }
     setIsHovered(false);
-    setOffset({ x: 0, y: 0 });
+    rectRef.current = null;
+    if (buttonRef.current) {
+      buttonRef.current.style.transition = 'transform 0.45s cubic-bezier(0.16, 1, 0.3, 1)';
+      buttonRef.current.style.transform = 'translate3d(0px, 0px, 0)';
+    }
+    if (fillLayerRef.current) {
+      fillLayerRef.current.style.transform = 'translate(-50%, -50%) scale(0)';
+    }
   };
 
   return (
     <button
       ref={buttonRef}
-      onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
+      onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       onClick={onClick}
-      style={{
-        transform: !isTouch
-          ? `translate3d(${offset.x}px, ${offset.y}px, 0)`
-          : undefined,
-        transition: isHovered
-          ? 'transform 0.1s cubic-bezier(0.16, 1, 0.3, 1)'
-          : 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
-      }}
       className={`relative overflow-hidden cursor-pointer ${className}`}
       {...props}
     >
       {/* Directional Liquid Fill Layer */}
       <span
-        className="absolute w-[220%] h-[220%] rounded-full pointer-events-none transition-transform duration-500 ease-out z-0"
+        ref={fillLayerRef}
+        className="absolute w-[220%] h-[220%] rounded-full pointer-events-none transition-transform duration-500 ease-out z-0 scale-0"
         style={{
-          left: `${fillOrigin.x}%`,
-          top: `${fillOrigin.y}%`,
-          transform: isHovered
-            ? 'translate(-50%, -50%) scale(1)'
-            : 'translate(-50%, -50%) scale(0)',
+          left: '50%',
+          top: '50%',
+          transform: 'translate(-50%, -50%) scale(0)',
           backgroundColor: fillColor,
         }}
       />
